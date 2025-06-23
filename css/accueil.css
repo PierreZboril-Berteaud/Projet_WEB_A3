@@ -22,20 +22,24 @@ footer {
     bottom: 0;
 
 }
-
 #infos {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: 2rem; /* espace entre image et texte */
+  justify-content: flex-start; /* Colle les éléments à gauche */
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  padding-left: 0;
 }
 
 #infos > img {
-  height: 400px;
-  width: 400px;
+  max-width: 700px;
+  min-width: 250px;
+  width: 100%;
+  height: auto;
   object-fit: contain;
-  padding: 5%;
+  padding: 0;
+  margin-right: 0rem;
 }
 
 #infos-text {

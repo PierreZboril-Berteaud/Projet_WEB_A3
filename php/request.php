@@ -1,77 +1,57 @@
 <?php
 
-    require_once('dbConnect.php');
-    ini_set('display_errors',1);
-    error_reporting(E_ALL);
+require_once('dbConnect.php');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-    session_start();
+$db = dbConnect();
+if (!$db) {
+    header('HTTP/1.1 503 Service Unavailable');
+    exit;
+}
 
-    $db = dbConnect();
-    if (!$db)
-    {
-        header('HTTP/1.1 503 Service Unavailable');
-        exit;
-    } 
+$req = $_SERVER['REQUEST_METHOD'];
 
-    $req = $_SERVER['REQUEST_METHOD']; 
+// Récupération de l'action depuis le paramètre GET "action"
+$requestRessource = $_GET['action'] ?? null;
 
-    $request = substr($_SERVER['PATH_INFO'], 1); 
-    $request = explode('/', $request);
-    $requestRessource = array_shift($request);
+if (empty($requestRessource)) {
+    header('HTTP/1.1 400 Bad Request');
+    echo json_encode(['error' => 'Aucune action spécifiée']);
+    exit;
+}
 
-    
-    if (empty($requestRessource)){
-        header('HTTP/1.1 400 Bad Request');
-        exit;
-    }
-
-    if($requestRessource == 'home'){
-        $data = 'home';
-        if($req == 'GET'){
-            header('HTTP/1.1 200 OK');
-        }
-    }
-
-
-/*
+header('Content-Type: application/json');
 
 switch ($requestRessource) {
-    case 'client':
-        switch ($request_method) {
-            case 'GET':
-                if ($id!=NULL) {
-                    $data = get_clientsById($id);
-                } else {
-                    $data = get_allclients();
-                }
-                break;
-
-            default:
-                header("HTTP/1.0 405 Method Not Allowed");
-                break;
+    case 'home':
+        if ($req === 'GET') {
+            $data = ['message' => 'Page d\'accueil', 'content' => 'home'];
+            header('HTTP/1.1 200 OK');
+        } else {
+            header('HTTP/1.1 405 Method Not Allowed');
+            echo json_encode(['error' => 'Méthode non autorisée']);
+            exit;
         }
         break;
 
-    case 'log_client':
-        switch ($request_method) {
-            case 'GET':
-                if ($email != '' && $mdp != '') { 
-                    $hashedPasswordFromDatabase = getPasswordByEmail_Hash_Client($email);
-                    if ($hashedPasswordFromDatabase !== null && password_verify($mdp, $hashedPasswordFromDatabase)) {
-                        $data = array('prenom' => getPrenomByEmailClient($email), 'nom' => getNomByEmailClient($email), 'email' => $email, 'profile' => 1, 'id' => getClientId($email));
-                        break;
-                    }
-                }
-                break;
-                default:
-                    header("HTTP/1.0 405 Method Not Allowed");
-                    break;
-            }
-            break;                   
-    }
+    case 'ajoutNavire':
+        if ($req === 'GET') {
+            $data = ['message' => 'Formulaire ajout navire', 'content' => 'ajoutNavire'];
+            header('HTTP/1.1 200 OK');
+        } else {
+            header('HTTP/1.1 405 Method Not Allowed');
+            echo json_encode(['error' => 'Méthode non autorisée']);
+            exit;
+        }
+        break;
 
-    header('Content-Type: application/json');
-    echo json_encode($data);
+    default:
+        header('HTTP/1.1 404 Not Found');
+        echo json_encode(['error' => 'Action inconnue']);
+        exit;
+}
+
+// Réponse JSON
+echo json_encode($data);
 exit;
-*/
-?>
