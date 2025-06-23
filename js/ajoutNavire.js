@@ -25,30 +25,29 @@ function displayAjoutNavire(){
         <input type="datetime-local" class="form-control" id="date" name="date" step="1" required>
     </div>
 
-
     <div class="row mb-3">
       <div class="col">
         <label for="Latitude" class="form-label">Latitude</label>
-        <input type="text" class="form-control" id="Latitude" name="Latitude" placeholder="entre 20 et 30" required>
+        <input type="number" class="form-control" id="Latitude" min="20" max="30" name="Latitude" placeholder="entre 20 et 30" required>
       </div>
       <div class="col">
         <label for="Longitude" class="form-label">Longitude</label>
-        <input type="text" class="form-control" id="Longitude" name="Longitude" placeholder="entre -98 et -78" required>
+        <input type="number" class="form-control" id="Longitude" min="-98" max="-78" name="Longitude" placeholder="entre -98 et -78" required>
       </div>
     </div>
 
     <div class="row mb-3">
       <div class="col">
         <label for="SOG" class="form-label">SOG</label>
-        <input type="text" class="form-control" id="SOG" name="SOG" placeholder="Speed Over Ground" required>
+        <input type="number" class="form-control" id="SOG" min="0" max="50" name="SOG" placeholder="Speed Over Ground" required>
       </div>
       <div class="col">
         <label for="COG" class="form-label">COG</label>
-        <input type="text" class="form-control" id="COG" name="COG" placeholder="Course Over Ground" required>
+        <input type="number" class="form-control" id="COG" min="0" max="359" name="COG" placeholder="Course Over Ground" required>
       </div>
       <div class="col">
         <label for="Heading" class="form-label">Heading</label>
-        <input type="text" class="form-control" id="Heading" name="Heading" placeholder="Heading" required>
+        <input type="number" class="form-control" id="Heading" min="0" max="359" name="Heading" placeholder="Heading" required>
       </div>
     </div>
 
@@ -59,21 +58,21 @@ function displayAjoutNavire(){
 
     <div class="mb-3">
       <label for="Etat" class="form-label">État</label>
-      <input type="text" class="form-control" id="Etat" name="Etat" required>
+      <input type="number" class="form-control" id="Etat" min="0" max="30" name="Etat" required>
     </div>
 
     <div class="row mb-3">
       <div class="col">
         <label for="Longueur" class="form-label">Longueur</label>
-        <input type="text" class="form-control" id="Longueur" name="Longueur" required>
+        <input type="number" class="form-control" id="Longueur" min="10" max="365" name="Longueur" required>
       </div>
       <div class="col">
         <label for="Largeur" class="form-label">Largeur</label>
-        <input type="text" class="form-control" id="Largeur" name="Largeur" required>
+        <input type="number" class="form-control" id="Largeur" min="3" max="124" name="Largeur" required>
       </div>
       <div class="col">
         <label for="TirantEau" class="form-label">Tirant d'eau</label>
-        <input type="text" class="form-control" id="TirantEau" name="TirantEau" required>
+        <input type="number" class="form-control" id="TirantEau" min="0.5" max="22.5" name="TirantEau" required>
       </div>
     </div>
     <div class="text-center">
