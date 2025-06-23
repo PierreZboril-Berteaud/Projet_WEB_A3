@@ -22,3 +22,24 @@ footer {
     bottom: 0;
 
 }
+
+#infos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem; /* espace entre image et texte */
+}
+
+#infos > img {
+  height: 400px;
+  width: 400px;
+  object-fit: contain;
+  padding: 5%;
+}
+
+#infos-text {
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+}
