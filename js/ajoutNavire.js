@@ -1,6 +1,3 @@
-//$("#AjoutNavire").click(()=> {ajaxRequest('GET','php/request.php/ajoutNavire/',displayAjoutNavire)});
-
-//$('#homePageButton').click(()=> {ajaxRequest('GET', 'php/request.php/home/', displayInfos)});
 
 $("#AjoutNavire").click(() => {
   ajaxRequest('GET', '../php/request.php?action=ajoutNavire', displayAjoutNavire);
@@ -10,45 +7,12 @@ $('#homePageButton').click(() => {
   ajaxRequest('GET', '../php/request.php?action=home', displayInfos);
 });
 
-/*function displayAjoutNavire(){
-    clearPage();
-    let html=
-
-    `<form>
-    <label for="MMSI">MMSI :</label><input type="text" id="MMSI" name="MMSI" placeholder="MMSI 9 Chiffres" required />
-    <label for="Date">Date :</label><input type="datetime-local" id="date" name="date" required>
-
-    <label for="Latitude">Latitude :</label><input type="text" id="Latitude" name="Latitude" placeholder="Latitude entre 20 et 30" required />
-    <label for="Longitude">Longitude :</label><input type="text" id="Longitude" name="Longitude" placeholder="Longitude entre -98 et -78" required />
-
-    <label for="SOG">SOG :</label><input type="text" id="SOG" name="SOG" placeholder="SOG" required />
-    <label for="COG">COG :</label><input type="text" id="COG" name="COG" placeholder="COG" required/>
-    <label for="Heading">Heading :</label><input type="text" id="Heading" name="Heading" placeholder="Heading" required />
-
-    <label for="Nom">Nom :</label><input type="text" id="Nom" name="Nom" placeholder="Nom" required />
-    <label for="Etat">Etat :</label><input type="text" id="Etat" name="Etat" placeholder="Etat" required />
-
-    <label for="Longueur">Longueur :</label><input type="text" id="Longueur" name="Longueur" placeholder="Longueur" required />
-    <label for="Largeur">Largeur :</label><input type="text" id="Largeur" name="Largeur" placeholder="Largeur" required />
-    <label for="TirantEau">Tirant d'eau :</label><input type="text" id="TirantEau" name="TirantEau" placeholder="Tirant d'eau" required />
-    <div class="form-group row">
-        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
-
-
-    </form>`
-    $("#AjoutNavireForm").html(html)
-}*/
-
 
 function displayAjoutNavire(){
   clearPage();
 
   let html = `
-  <form class="container p-4 shadow rounded bg-light" style="max-width: 700px; margin: auto;">
+  <form id="AjoutNavireForm_envoi" class="container p-4 shadow rounded bg-light" style="max-width: 700px; margin: auto; margin-bottom:10%;">
     <h3 class="text-center mb-4">Ajouter un Navire</h3>
 
     <div class="mb-3">
@@ -57,9 +21,10 @@ function displayAjoutNavire(){
     </div>
 
     <div class="mb-3">
-      <label for="date" class="form-label">Date</label>
-      <input type="datetime-local" class="form-control" id="date" name="date" required>
+        <label for="date" class="form-label">Date</label>
+        <input type="datetime-local" class="form-control" id="date" name="date" step="1" required>
     </div>
+
 
     <div class="row mb-3">
       <div class="col">
@@ -117,4 +82,32 @@ function displayAjoutNavire(){
   </form>`;
 
   $("#AjoutNavireForm").html(html);
+   $('#AjoutNavireForm_envoi').submit((event)=> {
+    event.preventDefault();
+
+    const data = {
+      MMSI: $("#MMSI").val(),
+      date: $("#date").val(),
+      latitude: $("#Latitude").val(),
+      longitude: $("#Longitude").val(),
+      SOG: $("#SOG").val(),
+      COG: $("#COG").val(),
+      Heading: $("#Heading").val(),
+      Nom: $("#Nom").val(),
+      Etat: $("#Etat").val(),
+      Longueur: $("#Longueur").val(),
+      Largeur: $("#Largeur").val(),
+      Draft: $("#TirantEau").val()
+    };
+    // Convertir l'objet data en une chaîne de requête
+    const queryString = new URLSearchParams(data).toString();
+
+    ajaxRequest('POST', '../php/request.php?action=ajoutNavireBdd',addNavireResponse,queryString);
+
+  });
 }
+
+function addNavireResponse(){
+  console.log("Navire ajouté avec succès");
+}
+

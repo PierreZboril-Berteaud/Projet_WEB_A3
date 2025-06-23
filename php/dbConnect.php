@@ -13,4 +13,59 @@
     }
 
     
+    function dbAddNavire($db, $MMSI, $date, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft)
+    {
+    try {
+        $db->beginTransaction();
+        $queryCheck = "SELECT MMSI FROM Bateau WHERE MMSI = :MMSI";
+        $stmtCheck = $db->prepare($queryCheck);
+        $stmtCheck->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
+        $stmtCheck->execute();
+
+        if (!$stmtCheck->fetch()) {
+            $queryBateau = "INSERT INTO Bateau (mmsi, nom, longueur, largeur, draft) 
+                            VALUES (:MMSI, :Nom, :Longueur, :Largeur, :Draft)";
+            $stmtBateau = $db->prepare($queryBateau);
+            $stmtBateau->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
+            $stmtBateau->bindParam(':Nom', $Nom, PDO::PARAM_STR);
+            $stmtBateau->bindParam(':Longueur', $Longueur);
+            $stmtBateau->bindParam(':Largeur', $Largeur);
+            $stmtBateau->bindParam(':Draft', $Draft);
+            $stmtBateau->execute();
+        }
+
+        $queryHist = "INSERT INTO Historique (mmsi, basedatetime, vesselstatus) 
+                      VALUES (:MMSI, :BaseDateTime, :VesselStatus) RETURNING id_date";
+        $stmtHist = $db->prepare($queryHist);
+        $stmtHist->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
+        $stmtHist->bindParam(':BaseDateTime', $date, PDO::PARAM_STR);
+        $stmtHist->bindParam(':VesselStatus', $Etat, PDO::PARAM_INT);
+        $stmtHist->execute();
+        $id_date = $stmtHist->fetchColumn();
+
+        // 3. Insérer dans Position
+        $queryPos = "INSERT INTO Position (mmsi, id_date, lat, lon, sog, cog, heading) 
+                     VALUES (:MMSI, :id_date, :Lat, :Lon, :SOG, :COG, :Heading)";
+        $stmtPos = $db->prepare($queryPos);
+        $stmtPos->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
+        $stmtPos->bindParam(':id_date', $id_date, PDO::PARAM_INT);
+        $stmtPos->bindParam(':Lat', $latitude);
+        $stmtPos->bindParam(':Lon', $longitude);
+        $stmtPos->bindParam(':SOG', $SOG);
+        $stmtPos->bindParam(':COG', $COG);
+        $stmtPos->bindParam(':Heading', $Heading);
+        $stmtPos->execute();
+
+        $db->commit();
+
+
+        return true;
+    } 
+    catch (PDOException $exception) {
+        $db->rollBack();
+        error_log('Request error: ' . $exception->getMessage());
+        return false;
+    }
+}
+
 ?>
