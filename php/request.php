@@ -1,50 +1,38 @@
 <?php
 
-require('database.php');
+    require_once('dbConnect.php');
+    ini_set('display_errors',1);
+    error_reporting(E_ALL);
 
-$request_method = $_SERVER["REQUEST_METHOD"];
-$request = substr($_SERVER['PATH_INFO'], 1);
-$request = explode('/', $request);
+    session_start();
 
-$requestRessource = array_shift($request);
-$request_uri = $_SERVER['REQUEST_URI'];
+    $db = dbConnect();
+    if (!$db)
+    {
+        header('HTTP/1.1 503 Service Unavailable');
+        exit;
+    } 
 
-$params = parse_url($request_uri, PHP_URL_QUERY);
-parse_str($params, $query_params);
+    $req = $_SERVER['REQUEST_METHOD']; 
 
-$nom = $query_params['nom'] ?? '';
-$prenom = $query_params['prenom'] ?? '';
-$tel = $query_params['tel'] ?? '';
-$email = $query_params['mail'] ?? '';
-$email_confirm = $query_params['mail_confirm'] ?? '';
-$mdp = $query_params['mdp'] ?? '';
-$mdp_confirm = $query_params['mdp_confirm'] ?? '';
-$ville = $query_params['ville'] ?? '';
-$specialite = $query_params['specialite'] ?? '';
-$type = $query_params['type'] ?? '';
-$id_ref = $query_params['id_ref'] ?? '';
-$date = $query_params['date'] ?? '';
-$id_medecin = $query_params['id_medecin'] ?? '';
-$id_client = $query_params['id_client'] ?? '';
-$heure = $query_params['heure'] ?? '';
-$id_rdv = $query_params['id_rdv'] ??'';
-$heure_debut = $query_params['heure_debut'] ??'';
-$heure_fin = $query_params['heure_fin'] ??'';
-$id_heure = $query_params['id_heure'] ??'';
-$code_postal = $query_params['code_postal'] ??'';
-$adresse = $query_params['adresse'] ??'';
-$data = false;
-$id = array_shift($request);
-$info = array_shift($request);
+    $request = substr($_SERVER['PATH_INFO'], 1); 
+    $request = explode('/', $request);
+    $requestRessource = array_shift($request);
+
+    
+    if (empty($requestRessource)){
+        header('HTTP/1.1 400 Bad Request');
+        exit;
+    }
+
+    if($requestRessource == 'home'){
+        $data = 'home';
+        if($req == 'GET'){
+            header('HTTP/1.1 200 OK');
+        }
+    }
 
 
-
-
-
-
-if ($id == '') {
-    $id = NULL;
-}
 /*
 
 switch ($requestRessource) {
