@@ -11,7 +11,7 @@ function displayInfos() // Affiche les informations de la page d'accueil
     
   clearPage();
   let html = `
-    <img src="../images/Bateau_1.jpeg" alt="logo">
+    <img src="../images/Bateau_1.jpeg" alt="logo" style="border-top-right-radius: 40px">
     <div id="infos-text" class="m-3">
       <p class="text-center">Bienvenue sur <b>Titre</b>...texte...</p>
       <div>

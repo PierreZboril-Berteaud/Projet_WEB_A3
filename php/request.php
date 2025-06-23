@@ -4,11 +4,14 @@ require_once('dbConnect.php');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+
 $db = dbConnect();
 if (!$db) {
     header('HTTP/1.1 503 Service Unavailable');
     exit;
 }
+
+
 
 $req = $_SERVER['REQUEST_METHOD'];
 
