@@ -17,7 +17,7 @@ function displayAjoutNavire(){
 
     <div class="mb-3">
       <label for="MMSI" class="form-label">MMSI</label>
-      <input type="text" class="form-control" id="MMSI" name="MMSI" placeholder="MMSI 9 chiffres" required>
+      <input type="text" class="form-control" id="MMSI" name="MMSI" maxlength="9" minlength="9" placeholder="MMSI 9 chiffres" required>
     </div>
 
     <div class="mb-3">
@@ -72,11 +72,11 @@ function displayAjoutNavire(){
       </div>
       <div class="col">
         <label for="TirantEau" class="form-label">Tirant d'eau</label>
-        <input type="number" class="form-control" id="TirantEau" min="0.5" max="22.5" name="TirantEau" required>
+        <input type="number" class="form-control" id="TirantEau" min="0.5" max="23" step="0.1" name="TirantEau" required>
       </div>
     </div>
     <div class="text-center">
-      <button type="submit" class="btn btn-primary">Confirmer l'identité</button>
+      <button type="submit" class="btn btn-primary">Ajouter Le Navire</button>
     </div>
   </form>`;
 
@@ -106,7 +106,15 @@ function displayAjoutNavire(){
   });
 }
 
-function addNavireResponse(){
-  console.log("Navire ajouté avec succès");
+function addNavireResponse(response){
+  if (response) {
+    // Si la réponse contient un message de succès, l'afficher
+    alert("Navire ajouté avec succès !");
+    // Rediriger vers la page d'accueil ou une autre page si nécessaire
+    ajaxRequest('GET', '../php/request.php?action=home', displayAjoutNavire);
+  } else {
+    // Si la réponse ne contient pas de succès, afficher un message d'erreur
+    alert("Erreur lors de l'ajout du navire : ");
+  }
 }
 
