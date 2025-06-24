@@ -48,6 +48,7 @@ switch ($requestRessource) {
             exit;
         }
         break;
+
     case 'ajoutNavireBdd':
         if ($req==='POST'){
             $MMSI = htmlspecialchars($_POST['MMSI']);
@@ -82,9 +83,10 @@ switch ($requestRessource) {
         } else {
             header('HTTP/1.1 405 Method Not Allowed');
             echo json_encode(['error' => 'Méthode non autorisée']);
-            exit;
-        }
+        } 
+        exit;
         
+
     default:
         header('HTTP/1.1 404 Not Found');
         echo json_encode(['error' => 'Action inconnue']);

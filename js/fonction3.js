@@ -9,6 +9,8 @@ function AfficherTableauNavire(response){
     clearPage(); //vider le contenu principal
 
     let bateaux; //bateaux est un tableau
+    
+  /*  
     try {
         bateaux = JSON.parse(response); //convertit le JSON en tableau JS
     } catch (error){
@@ -16,7 +18,24 @@ function AfficherTableauNavire(response){
         $('TableauNavire').html("<p>Erreur : les données reçues sont invalides.</p>");
         return;
     }
-    
+    */
+
+    if (response) {
+        try {
+             bateaux = JSON.parse(response); //convertit le JSON en tableau JS
+        } catch (error){
+            console.error("Erreur lors de l'analyse des données JSON :", error);
+            $('TableauNavire').html("<p>Erreur : les données reçues sont invalides.</p>");
+            return;
+        }
+    } else {
+            console.error("La réponse est vide ou non définie.");
+            $('#TableauNavire').html("<p>Erreur : la réponse est vide ou non définie.</p>");
+    }
+
+
+
+
 //tableau
   let html = `
     <img src="../images/Bateau_1.jpeg" alt="logo">
@@ -53,7 +72,7 @@ function AfficherTableauNavire(response){
         </thead>
         <tbody>
         `;
-        
+
 /*
         if (bateaux.length === 0){ //on vérifie si le tableau "bateaux" est vide
             html += `<tr><td colspan="12">Aucun navire trouvé dans la base de données.</td></tr>`;
