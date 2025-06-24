@@ -107,7 +107,7 @@ function displayNavireTable(response) {
 
 
 
-$('#CarteNavire').html('<div id="map" style="height: 600px;"></div>');
+/*$('#CarteNavire').html('<div id="map" style="height: 600px;"></div>');
 
 let navires ={};
 response.forEach(p => {
@@ -156,7 +156,7 @@ for (let mmsi in navires){
         zoom:5
       },
       margin: {t:0, b:0, l:0, r:0}
-    });
+    });*/
 
 
 
