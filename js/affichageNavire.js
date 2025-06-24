@@ -67,7 +67,7 @@ function displayNavireTable(response) {
 
   let button=`
   <div class="d-flex justify-content-between my-3">
-    <button id="predictButton" class="btn btn-primary">Prédire Le Type de Navire</button>
+    <button id="predictButton" class="btn btn-primary">Prédire Le Type</button>
     <button id="positionButton" class="btn btn-primary">Prédire La Position</button>
   </div>`;
 
