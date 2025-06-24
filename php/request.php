@@ -84,7 +84,16 @@ switch ($requestRessource) {
             echo json_encode(['error' => 'Méthode non autorisée']);
             exit;
         }
-        
+    case 'PageClusters':
+        if ($req === 'GET') {
+            $data = ['message' => 'Page Clusters', 'content' => 'PageClusters'];
+            header('HTTP/1.1 200 OK');
+        } else {
+            header('HTTP/1.1 405 Method Not Allowed');
+            echo json_encode(['error' => 'Méthode non autorisée']);
+            exit;
+        }
+        break;
     default:
         header('HTTP/1.1 404 Not Found');
         echo json_encode(['error' => 'Action inconnue']);
