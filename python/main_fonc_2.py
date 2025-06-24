@@ -82,10 +82,13 @@ if __name__ == '__main__':
             prediction = prediction_vessel_type(model, new_data_df,label_encoder)
         if args.Model== "SVM":
             prediction = prediction_vessel_type(model,new_data_df,label_encoder)
+
         if args.Model == "KNN":
             prediction = prediction_vessel_type(model, new_data_df,label_encoder)
     if args.Cross_val_score:
         cross_score = validation_croisee(model, X, y, 3)
+
+
 
 
 

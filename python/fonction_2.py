@@ -270,7 +270,7 @@ def prediction_vessel_type(model,new_data,label_encoder=None):
     y_pred = model.predict(new_data)
     if label_encoder:
         y_pred= label_encoder.inverse_transform([y_pred])
-    print("y_pred : ",y_pred[0])
+
     return y_pred[0]
 
 
