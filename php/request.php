@@ -52,8 +52,13 @@ switch ($requestRessource) {
 
     case 'ajoutNavireBdd':
         if ($req==='POST'){
+
             $MMSI = htmlspecialchars($_POST['MMSI']);
             $date = htmlspecialchars($_POST['date']);
+
+            $dateTime = DateTime::createFromFormat('Y-m-d\TH:i:s', $date);
+            $formattedDate = $dateTime->format('Y-m-d H:i:s');
+
             $latitude = htmlspecialchars($_POST['latitude']);
             $longitude = htmlspecialchars($_POST['longitude']);
             $SOG = htmlspecialchars($_POST['SOG']);
@@ -65,7 +70,7 @@ switch ($requestRessource) {
             $Largeur = htmlspecialchars($_POST['Largeur']);
             $Draft = htmlspecialchars($_POST['Draft']);
 
-            $data = dbAddNavire($db, $MMSI, $date, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft);
+            $data = dbAddNavire($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft);
             if($data != true){
                 header('HTTP/1.1 401 Unauthorized');
                 
@@ -85,16 +90,6 @@ switch ($requestRessource) {
             echo json_encode(['error' => 'Méthode non autorisée']);
             exit;
         }
-    case 'PageClusters':
-        if ($req === 'GET') {
-            $data = ['message' => 'Page Clusters', 'content' => 'PageClusters'];
-            header('HTTP/1.1 200 OK');
-        } else {
-            header('HTTP/1.1 405 Method Not Allowed');
-            echo json_encode(['error' => 'Méthode non autorisée']);
-            exit;
-        }
-        break;
     case 'GetNavire':
         if($req==='GET'){
             $data=dbGetNavire($db);

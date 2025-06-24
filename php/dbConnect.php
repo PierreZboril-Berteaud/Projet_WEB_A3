@@ -33,7 +33,7 @@
             $stmtBateau->bindParam(':Draft', $Draft);
             $stmtBateau->execute();
         }
-
+    
         $queryHist = "INSERT INTO Historique (mmsi, basedatetime, vesselstatus) 
                       VALUES (:MMSI, :BaseDateTime, :VesselStatus) RETURNING id_date";
         $stmtHist = $db->prepare($queryHist);
@@ -71,7 +71,7 @@
 function dbGetNavire($db){
     try {
         $query = "SELECT 
-                b.MMSI, 
+                b.mmsi, 
                 TO_CHAR(h.basedatetime,'YYYY DD MM HH24 MI SS'),
                 p.lat,
                 p.lon,

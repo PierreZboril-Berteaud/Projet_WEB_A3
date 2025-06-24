@@ -81,7 +81,7 @@ function displayAjoutNavire(){
   $("#AjoutNavireForm").html(html);
    $('#AjoutNavireForm_envoi').submit((event)=> {
     event.preventDefault();
-
+    console.log($("#date").val())
     const data = {
       MMSI: $("#MMSI").val(),
       date: $("#date").val(),
@@ -96,6 +96,7 @@ function displayAjoutNavire(){
       Largeur: $("#Largeur").val(),
       Draft: $("#TirantEau").val()
     };
+    
     // Convertir l'objet data en une chaîne de requête
     const queryString = new URLSearchParams(data).toString();
 
