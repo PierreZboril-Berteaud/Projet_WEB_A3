@@ -27,6 +27,7 @@ if (empty($requestRessource)) {
 header('Content-Type: application/json');
 
 switch ($requestRessource) {
+
     case 'home':
         if ($req === 'GET') {
             $data = ['message' => 'Page d\'accueil', 'content' => 'home'];
@@ -75,7 +76,6 @@ switch ($requestRessource) {
             }
         }
         break;
-
     case 'AfficheTableau':
         if ($req === 'GET') {
             $data = "Page Affiche Tableau";
@@ -93,6 +93,11 @@ switch ($requestRessource) {
             header('HTTP/1.1 405 Method Not Allowed');
             echo json_encode(['error' => 'Méthode non autorisée']);
             exit;
+        }
+        break;
+    case 'GetNavire':
+        if($req==='GET'){
+            $data=dbGetNavire($db);
         }
         break;
     default:

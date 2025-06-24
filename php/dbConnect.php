@@ -68,4 +68,37 @@
     }
 }
 
+function dbGetNavire($db){
+    try {
+        $query = "SELECT 
+                b.MMSI, 
+                TO_CHAR(h.basedatetime,'YYYY DD MM HH24 MI SS'),
+                p.lat,
+                p.lon,
+                p.sog,
+                p.cog,
+                p.heading,
+                b.nom AS nom_bateau,
+                h.vesselstatus,
+                b.longueur,
+                b.largeur,
+                b.draft
+            FROM 
+                Bateau b
+            JOIN 
+                Historique h ON b.MMSI = h.MMSI
+            JOIN 
+                Position p ON h.MMSI = p.MMSI AND h.id_date = p.id_date
+            ORDER BY 
+                b.nom, h.basedatetime;";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    } catch (PDOException $e) {
+        error_log('Request error: ' . $e->getMessage());
+        return false;
+    }
+}
+
 ?>

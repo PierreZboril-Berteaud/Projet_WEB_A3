@@ -18,6 +18,10 @@
       <change beforePath="$PROJECT_DIR$/../php/constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/../php/constants.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../php/dbConnect.php" beforeDir="false" afterPath="$PROJECT_DIR$/../php/dbConnect.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../php/request.php" beforeDir="false" afterPath="$PROJECT_DIR$/../php/request.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +97,7 @@
       <option name="presentableId" value="Default" />
       <updated>1750750501254</updated>
       <workItem from="1750750502557" duration="709000" />
-      <workItem from="1750752415218" duration="636000" />
+      <workItem from="1750752415218" duration="2077000" />
     </task>
     <servers />
   </component>
