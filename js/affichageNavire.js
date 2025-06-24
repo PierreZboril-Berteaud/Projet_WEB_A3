@@ -61,7 +61,7 @@ function displayNavireTable(response) {
     
     }
   }
-
+  
   let button=`
   <div class="d-flex justify-content-between my-3">
     <button id="predictButton" class="btn btn-primary">Prédire Le Type</button>
@@ -72,22 +72,92 @@ function displayNavireTable(response) {
 
   $('#predictButton').click(() => {
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
+
     if (selectedIndex !== undefined) {
-      let mmsi = response[selectedIndex].mmsi;
-      //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
-      console.log(`Prédiction du type de navire pour le navire MMSI: ${mmsi}`);
+      const data = {
+      mmsi: response[selectedIndex].mmsi,
+      Length: response[selectedIndex].longueur,
+      Width: response[selectedIndex].largeur,
+      Draft: response[selectedIndex].profondeur
+    };
+    //const queryString = new URLSearchParams(data).toString();
+
+
+
+      ajaxRequest('POST', '../php/request.php?action=predictType',displayPredictPage,queryString);
+
+    //console.log(`Prédiction du type pour le navire MMSI: ${response[selectedIndex].mmsi}`);
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
   })
+
   $('#positionButton').click(() => {
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
     if (selectedIndex !== undefined) {
-      let mmsi = response[selectedIndex].mmsi;
+      
       //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
+    
       console.log(`Prédiction de la position pour le navire MMSI: ${mmsi}`);
+      console.log(`Prédiction de la position pour le navire MMSI: ${length}`)
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
   })
+
+
+
+$('#CarteNavire').html('<div id="map" style="height: 600px;"></div>');
+
+let navires ={};
+response.forEach(p => {
+  if (!navires[p.mmsi])navires[p.mmsi] = [];
+  navires[p.mmsi].push(p);
+});
+
+
+let trajectoires =[];
+
+for (let mmsi in navires){
+  let data = navires[mmsi];
+  let lats = data.map(p => p.lat);
+  let lons = data.map(p=>p.lon);
+  let texts = data.map(p=> 
+      `MMSI: ${p.mmsi}<br>` +
+      `Nom: ${p.nom_bateau}<br>` +
+      `Horodatage: ${p.basedatetime}<br>` +
+      `SOG: ${p.sog} kn<br>` +
+      `COG: ${p.cog}°<br>` +
+      `Cap réel: ${p.heading}°<br>` +
+      `Longueur: ${p.longueur} m<br>` +
+      `Largeur: ${p.largeur} m<br>` +
+      `Tirant d'eau: ${p.draft} m<br>` +
+      `État: ${p.vesselstatus}`
+    );
+
+    trajectoires.push({
+      type:'scattermapbox',
+      mode: 'lines+markers',
+      name: data[0].nom_bateau || mmsi,
+      lat: lats,
+      lon:lons,
+      text:texts,
+      hoverinfo:'text',
+      marker:{size: 6},
+      line: { width: 2}
+    });
 }
+
+
+    Plotly.newPlot('map', trajectoires,{
+      mapbox: {
+        style: 'open-street-map',
+        center: {lat: 47.0, lon:2.0},
+        zoom:5
+      },
+      margin: {t:0, b:0, l:0, r:0}
+    });
+
+
+
+  }

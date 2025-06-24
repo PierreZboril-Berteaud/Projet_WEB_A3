@@ -1,6 +1,7 @@
 <?php
 
 require_once('dbConnect.php');
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -93,6 +94,18 @@ switch ($requestRessource) {
     case 'GetNavire':
         if($req==='GET'){
             $data=dbGetNavire($db);
+        }
+        break;
+    case 'predictType':
+        
+        if($req==='POST'){
+
+            $MMSI = htmlspecialchars($_POST['mmsi']);
+            $Longueur = htmlspecialchars($_POST['Length']);
+            $Largeur = htmlspecialchars($_POST['Width']);
+            $Draft = htmlspecialchars($_POST['Draft']);
+            $data=dbGetTypePrediction($Longueur,$Largeur,$Draft);
+            
         }
         break;
     default:

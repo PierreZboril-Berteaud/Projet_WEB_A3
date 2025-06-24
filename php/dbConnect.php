@@ -1,5 +1,6 @@
 <?php
     include "constants.php";
+
     function dbConnect(){
         try {
             $dsn = "pgsql:host=" . dbserver . ";port=" . dbport . ";dbname=" . dbname . ";user=" . dbuser . ";password=" . db_pwd;
@@ -101,4 +102,18 @@ function dbGetNavire($db){
     }
 }
 
+
+
+    function dbGetTypePrediction($Longueur,$Largeur,$Draft){
+        $result=[];
+        $command = "python3 ../python/main_fonc_2.py --Predict True --Model RandomForest --Length $Longueur --Width $Largeur --Draft $Draft";
+        #$command = "python3 ../python/test.py";
+        exec($command, $result);
+
+        if (empty($result)) {
+            error_log('No data returned from Python script');
+            return false;
+        }
+        return $result;   
+    }
 ?>

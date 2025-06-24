@@ -1,6 +1,10 @@
 
 ajaxRequest('GET', '../php/request.php?action=home', displayInfos);
 
+$('#Accueil').click(() => {
+  ajaxRequest('GET', '../php/request.php?action=home', displayInfos);
+});
+
 function clearPage(){ // Permet de vider la page
   $('#infos').html('');
   $("#AjoutNavireForm").html('');
@@ -9,6 +13,7 @@ function clearPage(){ // Permet de vider la page
 
 function displayInfos() {
   clearPage();
+  console.log("DiplayingInfo")
   let html = `
     <div id="infos-container">
       <img src="../images/Bateau_1.jpeg" alt="logo" id="infos-image">
