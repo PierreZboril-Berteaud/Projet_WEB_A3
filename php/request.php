@@ -1,6 +1,7 @@
 <?php
 
 require_once('dbConnect.php');
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -95,6 +96,16 @@ switch ($requestRessource) {
             $data=dbGetNavire($db);
         }
         break;
+    case 'predictType':
+        if($req==='POST'){
+            $MMSI = htmlspecialchars($_POST['MMSI']);
+            $Longueur = htmlspecialchars($_POST['Longueur']);
+            $Largeur = htmlspecialchars($_POST['Largeur']);
+            $Draft = htmlspecialchars($_POST['Draft']);
+            $data=dbGetTypePrediction($MMSI,$Longueur,$Largeur,$Draft);
+            echo "data";
+            echo $data;
+        }
     default:
         header('HTTP/1.1 404 Not Found');
         echo json_encode(['error' => 'Action inconnue']);

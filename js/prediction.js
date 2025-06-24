@@ -1,16 +1,3 @@
-
-ajaxRequest('GET', '../php/request.php?action=home', displayInfos);
-
-function clearPage() {
-    $('#infos').html('');
+function displayPredictPage(response){
+    console.log("Ok")   
 }
-
-function displayInfos() {
-    clearPage();
-    let html = `
-
-  `;
-    $('#infos').html(html);
-}
-
-

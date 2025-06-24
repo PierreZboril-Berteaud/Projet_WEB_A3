@@ -61,7 +61,7 @@ function displayNavireTable(response) {
     
     }
   }
-
+  
   let button=`
   <div class="d-flex justify-content-between my-3">
     <button id="predictButton" class="btn btn-primary">Prédire Le Type</button>
@@ -72,20 +72,36 @@ function displayNavireTable(response) {
 
   $('#predictButton').click(() => {
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
+
     if (selectedIndex !== undefined) {
-      let mmsi = response[selectedIndex].mmsi;
-      //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
-      console.log(`Prédiction du type de navire pour le navire MMSI: ${mmsi}`);
+
+      const data = {
+      mmsi: response[selectedIndex].mmsi,
+      Longueur: response[selectedIndex].longueur,
+      Largeur: response[selectedIndex].largeur,
+      Draft: response[selectedIndex].draft
+    };
+    const queryString = new URLSearchParams(data).toString();
+
+    ajaxRequest('POST', '../php/request.php?action=predictType',displayPredictPage,queryString);
+    //console.log(`Prédiction du type pour le navire MMSI: ${response[selectedIndex].mmsi}`);
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
   })
+  
   $('#positionButton').click(() => {
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
     if (selectedIndex !== undefined) {
       let mmsi = response[selectedIndex].mmsi;
+      let length = response[selectedIndex].longueur
+      let width = response[selectedIndex].largeur
+      let draft = response[selectedIndex].profondeur
       //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
+      
+
       console.log(`Prédiction de la position pour le navire MMSI: ${mmsi}`);
+      console.log(`Prédiction de la position pour le navire MMSI: ${length}`)
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }

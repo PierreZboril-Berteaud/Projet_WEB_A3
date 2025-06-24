@@ -3,7 +3,7 @@ from xmlrpc.client import boolean
 from fonction_2 import *
 import argparse
 if __name__ == '__main__':
-    data = nettoyage_donnees_AIS('./export_IA.csv')
+    data = nettoyage_donnees_AIS('../export_IA.csv')
     data_scaled_df = normaliser_donnees(data)
     X = data[['Length','Width','Draft', 'VesselType']]
     y = data['VesselType']
