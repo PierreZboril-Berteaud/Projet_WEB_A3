@@ -32,6 +32,7 @@ function displayNavireTable(response) {
                   <th>Longueur</th>
                   <th>Largeur</th>
                   <th>Tirant d'eau</th>
+                  <th>Prediction</th>
               </tr>
           </thead>
           </table>
@@ -54,6 +55,10 @@ function displayNavireTable(response) {
         <td>${response[i].longueur}</td>
         <td>${response[i].largeur}</td>
         <td>${response[i].draft}</td>
+        
+        <td><div>
+          <input type="radio" id="predict" name="prediction" value="false"/>
+        </div></td>
       </tr>
     `;
     $("table.container").append(row);
