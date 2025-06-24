@@ -3,12 +3,12 @@ from xmlrpc.client import boolean
 from fonction_2 import *
 import argparse
 if __name__ == '__main__':
+    prediction=0
     data = nettoyage_donnees_AIS('../export_IA.csv')
     data_scaled_df = normaliser_donnees(data)
     X = data[['Length','Width','Draft', 'VesselType']]
     y = data['VesselType']
     X_train, X_test, y_train, y_test = prepare_donnees(data_scaled_df)
-    prediction=0
     """
         Ajout d'arguments pour pouvoir entrer des données à la main
     """
@@ -77,7 +77,6 @@ if __name__ == '__main__':
 
         if args.Model == "RandomForest":
             prediction = prediction_vessel_type(model,new_data_df,label_encoder)
-
         if args.Model == "LogisticRegression":
             prediction = prediction_vessel_type(model, new_data_df,label_encoder)
         if args.Model== "SVM":
@@ -85,8 +84,12 @@ if __name__ == '__main__':
 
         if args.Model == "KNN":
             prediction = prediction_vessel_type(model, new_data_df,label_encoder)
+        print(prediction)
     if args.Cross_val_score:
         cross_score = validation_croisee(model, X, y, 3)
+
+
+
 
 
 
