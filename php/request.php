@@ -97,15 +97,17 @@ switch ($requestRessource) {
         }
         break;
     case 'predictType':
+        
         if($req==='POST'){
-            $MMSI = htmlspecialchars($_POST['MMSI']);
-            $Longueur = htmlspecialchars($_POST['Longueur']);
-            $Largeur = htmlspecialchars($_POST['Largeur']);
+
+            $MMSI = htmlspecialchars($_POST['mmsi']);
+            $Longueur = htmlspecialchars($_POST['Length']);
+            $Largeur = htmlspecialchars($_POST['Width']);
             $Draft = htmlspecialchars($_POST['Draft']);
-            $data=dbGetTypePrediction($MMSI,$Longueur,$Largeur,$Draft);
-            echo "data";
-            echo $data;
+            $data=dbGetTypePrediction($Longueur,$Largeur,$Draft);
+            
         }
+        break;
     default:
         header('HTTP/1.1 404 Not Found');
         echo json_encode(['error' => 'Action inconnue']);

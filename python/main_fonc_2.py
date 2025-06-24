@@ -28,23 +28,23 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not args.Train and args.Model=="RandomForest":
-        with open('modele_rf.pkl', 'rb') as f:
+        with open('../model/modele_rf.pkl', 'rb') as f:
             model = pickle.load(f)
     if not args.Train and args.Model=="LogisticRegression":
-        with open('modele_logreg.pkl', 'rb') as f:
+        with open('../model/modele_logreg.pkl', 'rb') as f:
             model = pickle.load(f)
     if not args.Train and args.Model=="SVM":
-        with open('modele_svm.pkl', 'rb') as f:
+        with open('../model/modele_svm.pkl', 'rb') as f:
             model = pickle.load(f)
     if not args.Train and args.Model == "KNN":
-        with open('modele_knn.pkl', 'rb') as f:
+        with open('../model/modele_knn.pkl', 'rb') as f:
             model = pickle.load(f)
 
 
     if not args.Train and args.Predict==True:
-        with open('scaler.pkl', 'rb') as f:
+        with open('../model/scaler.pkl', 'rb') as f:
             scaler = pickle.load(f)
-        with open('label_encoder.pkl', 'rb') as f:
+        with open('../model/label_encoder.pkl', 'rb') as f:
             label_encoder = pickle.load(f)
 
 

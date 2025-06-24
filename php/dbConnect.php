@@ -104,7 +104,7 @@ function dbGetNavire($db){
 
 
 
-    function dbGetTypePrediction($MMSI,$Longueur,$Largeur,$Draft){
+    function dbGetTypePrediction($Longueur,$Largeur,$Draft){
         $result=[];
         $command = "python3 ../python/main_fonc_2.py --Predict True --Model RandomForest --Length $Longueur --Width $Largeur --Draft $Draft";
         exec($command, $result);

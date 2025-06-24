@@ -24,7 +24,7 @@ def nettoyage_donnees_AIS(emplacement_file):
     data['VesselType'] = label_encoder.fit_transform(data['VesselType'])
 
 
-    with open('label_encoder.pkl', 'wb') as f:
+    with open('../model/label_encoder.pkl', 'wb') as f:
         pickle.dump(label_encoder, f)
 
     return data
@@ -42,7 +42,7 @@ def normaliser_donnees(data):
     data_scaled_df = pd.DataFrame(data_scaled, columns=features_numeriques)
     data_scaled_df['VesselType'] = data['VesselType']
 
-    with open('scaler.pkl', 'wb') as f:
+    with open('../model/scaler.pkl', 'wb') as f:
         pickle.dump(scaler, f)
 
 
@@ -81,7 +81,7 @@ def classification_random_forest(X_train, X_test, y_train, y_test):
     print("Accuracy pour la méthode du Random Forest :", accuracy_score(y_test, y_pred))
     print("Classification report pour la méthode du Random Forest :", classification_report(y_test, y_pred,zero_division=0))
 
-    with open('modele_rf.pkl', 'wb') as f:
+    with open('../model/modele_rf.pkl', 'wb') as f:
         pickle.dump(rf, f)
 
     return rf, y_test, y_pred
@@ -101,7 +101,7 @@ def classification_Logistic_Regression (X_train, X_test, y_train, y_test) :
     print("Accuracy pour la méthode de la Régression Logistique :", accuracy_score(y_test, y_pred))
     print("Classification report pour la méthode de la Régression Logistique :", classification_report(y_test, y_pred,zero_division=0))
 
-    with open('modele_logreg.pkl', 'wb') as f:
+    with open('../model/modele_logreg.pkl', 'wb') as f:
         pickle.dump(log_reg, f)
 
     return log_reg, y_test, y_pred
@@ -124,7 +124,7 @@ def classification_SVM(X_train, X_test, y_train, y_test):
     print("Classification report pour la méthode SVM :", classification_report(y_test, y_pred, zero_division=0))
 
     # Sauvegarde du modèle
-    with open('modele_svm.pkl', 'wb') as f:
+    with open('../model/modele_svm.pkl', 'wb') as f:
         pickle.dump(svm_model, f)
 
     return y_test, y_pred
@@ -259,7 +259,7 @@ def classification_KNN(X_train, X_test, y_train, y_test):
     print("Classification report pour la méthode KNN :", classification_report(y_test, y_pred, zero_division=0))
 
     # Sauvegarde du modèle
-    with open('modele_knn.pkl', 'wb') as f:
+    with open('../model/modele_knn.pkl', 'wb') as f:
         pickle.dump(knn_model, f)
 
     return y_test, y_pred
