@@ -8,9 +8,9 @@ $('#homePageButton').click(() => {
 });
 
 
+
 function displayAjoutNavire(){
   clearPage();
-
   let html = `
   <form id="AjoutNavireForm_envoi" class="container p-4 shadow rounded bg-light" style="max-width: 700px; margin: auto; margin-bottom:10%;">
     <h3 class="text-center mb-4">Ajouter un Navire</h3>
