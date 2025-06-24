@@ -13,7 +13,7 @@ function displayInfos() // Affiche les informations de la page d'accueil
   let html = `
     <img src="../images/Bateau_1.jpeg" alt="logo" style="border-top-right-radius: 40px">
     <div id="infos-text" class="m-3">
-      <p class="text-center">Bienvenue sur <b>Titre</b>...texte...</p>
+      <p class="text-center">Bienvenue sur <b>Titre</b>Analyse et Modélisation des Comportements de Navigation des Navires à partir des Données AIS</p>
       <div>
         <h4>Comment ça marche ?</h4>
         <p style="text-align: justify;">...texte...</p>
