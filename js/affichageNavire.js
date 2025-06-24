@@ -16,24 +16,26 @@ function displayNavireTable(response) {
   console.log(response);
   
   let html = `
-      <div class="mx-5"><table class="table table-striped table-hover border border-1 rounded">
-      <thead style="background-color: #12769E; color: white; position: sticky; top:0px">
-    <tr>
-      <th scope="col">MMSI</th>
-      <th scope="col">Date</th>
-      <th scope="col">latitude</th>
-      <th scope="col">longitude</th>
-      <th scope="col">SOG</th>
-      <th scope="col">COG</th>
-      <th scope="col">Heading</th>
-      <th scope="col">Nom</th>
-      <th scope="col">Status</th>
-      <th scope="col">Longueur</th>
-      <th scope="col">Largeur</th>
-      <th scope="col">Profondeur</th>
-    </tr>
-    </thead>
-    <tbody>`; 
+      <h3> Liste des bateaux </h3>
+      <table class="container">
+          <thead>
+              <tr>
+                  <th>MMSI</th>
+                  <th>Horodatage</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>SOG</th>
+                  <th>COG</th>
+                  <th>Cap réel</th>
+                  <th>Nom</th>
+                  <th>Etat</th>
+                  <th>Longueur</th>
+                  <th>Largeur</th>
+                  <th>Tirant d'eau</th>
+              </tr>
+          </thead>
+          </table>
+          `; 
       $('#TableauNavire').html(html);
 
   if (response.length !== 0) {
