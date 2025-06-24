@@ -78,10 +78,11 @@ function displayNavireTable(response) {
       mmsi: response[selectedIndex].mmsi,
       Length: response[selectedIndex].longueur,
       Width: response[selectedIndex].largeur,
-      Draft: response[selectedIndex].profondeur
+      Draft: response[selectedIndex].draft
     };
-    //const queryString = new URLSearchParams(data).toString();
-
+    console.log(data)
+    const queryString = new URLSearchParams(data).toString();
+    console.log(queryString)
 
 
       ajaxRequest('POST', '../php/request.php?action=predictType',displayPredictPage,queryString);
@@ -107,7 +108,7 @@ function displayNavireTable(response) {
 
 
 
-$('#CarteNavire').html('<div id="map" style="height: 600px;"></div>');
+/*$('#CarteNavire').html('<div id="map" style="height: 600px;"></div>');
 
 let navires ={};
 response.forEach(p => {
@@ -158,6 +159,6 @@ for (let mmsi in navires){
       margin: {t:0, b:0, l:0, r:0}
     });
 
-
+*/
 
   }

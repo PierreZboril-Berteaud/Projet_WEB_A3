@@ -104,6 +104,7 @@ switch ($requestRessource) {
             $Longueur = htmlspecialchars($_POST['Length']);
             $Largeur = htmlspecialchars($_POST['Width']);
             $Draft = htmlspecialchars($_POST['Draft']);
+            
             $data=dbGetTypePrediction($Longueur,$Largeur,$Draft);
             
         }
