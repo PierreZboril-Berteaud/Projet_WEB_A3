@@ -72,7 +72,7 @@ function dbGetNavire($db){
     try {
         $query = "SELECT 
                 b.mmsi, 
-                TO_CHAR(h.basedatetime,'YYYY DD MM HH24 MI SS'),
+                h.basedatetime,
                 p.lat,
                 p.lon,
                 p.sog,
