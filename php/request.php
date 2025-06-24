@@ -46,6 +46,16 @@ switch ($requestRessource) {
         }
         break;
 
+    case 'AfficheTableau':
+        if ($req === 'GET') {
+            $data = "Page Affiche Tableau";
+            header('HTTP/1.1 200 OK');
+        } else {
+            header('HTTP/1.1 405 Method Not Allowed');
+            echo json_encode(['error' => 'Méthode non autorisée']);
+            exit;
+        }
+        
     default:
         header('HTTP/1.1 404 Not Found');
         echo json_encode(['error' => 'Action inconnue']);

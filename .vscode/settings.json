@@ -8,6 +8,15 @@
             "name": "postgres",
             "database": "projetweba3",
             "username": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "projetweba3",
+            "username": "florelle",
+            "name": "florelle"
         }
     ]
 }
