@@ -42,7 +42,7 @@ function displayNavireTable(response) {
   if (response.length !== 0) {
   for (let i = 0; i < response.length; i++) {
     let row = `
-      <tr>
+      <tr data-index="${i}">
         <td>${response[i].mmsi}</td>
         <td>${response[i].basedatetime}</td>
         <td>${response[i].lat}</td>
@@ -55,13 +55,42 @@ function displayNavireTable(response) {
         <td>${response[i].longueur}</td>
         <td>${response[i].largeur}</td>
         <td>${response[i].draft}</td>
-        
-        <td><div>
-          <input type="radio" id="predict" name="prediction" value="false"/>
-        </div></td>
-      </tr>
+        <td>
+          <input type="radio" name="Prediction-Type-Navire" class="predict-radio" data-index="${i}">
+        </td>
+    </tr>
     `;
     $("table.container").append(row);
+    
     }
   }
+
+  let button=`
+  <div class="d-flex justify-content-between my-3">
+    <button id="predictButton" class="btn btn-primary">Prédire Le Type de Navire</button>
+    <button id="positionButton" class="btn btn-primary">Prédire La Position</button>
+  </div>`;
+
+  $('#TableauNavire').append(button);
+
+  $('#predictButton').click(() => {
+    let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
+    if (selectedIndex !== undefined) {
+      let mmsi = response[selectedIndex].mmsi;
+      //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
+      console.log(`Prédiction du type de navire pour le navire MMSI: ${mmsi}`);
+    } else {
+      alert("Veuillez sélectionner un navire pour la prédiction.");
+    }
+  })
+  $('#positionButton').click(() => {
+    let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
+    if (selectedIndex !== undefined) {
+      let mmsi = response[selectedIndex].mmsi;
+      //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
+      console.log(`Prédiction de la position pour le navire MMSI: ${mmsi}`);
+    } else {
+      alert("Veuillez sélectionner un navire pour la prédiction.");
+    }
+  })
 }
