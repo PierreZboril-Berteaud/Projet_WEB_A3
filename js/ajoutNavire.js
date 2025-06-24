@@ -4,9 +4,6 @@ $("#AjoutNavire").click(() => {
 });
 
 
-
-
-
 function displayAjoutNavire(){
   clearPage();
   let html = `

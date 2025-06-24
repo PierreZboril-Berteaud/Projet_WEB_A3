@@ -19,10 +19,6 @@ footer {
 
 }
 
-#infos-container-fluid{
-  padding: 0;
-}
-
 #infos-container {
   display: flex;
   align-items: flex-start;

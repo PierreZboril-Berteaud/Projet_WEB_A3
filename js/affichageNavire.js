@@ -14,7 +14,7 @@ function DisplayTablePage(){
 function displayNavireTable(response) {
   let html = `
       <h3> Liste des bateaux </h3>
-      <table class="container">
+      <table id="tabletable_bateau" class="container">
           <thead>
               <tr>
                   <th>MMSI</th>
