@@ -7,14 +7,11 @@ $("#AffichageNavire").click(() => {
 //fonction appelée après la réception des données des bateaux 
 function DisplayTablePage(){
     clearPage(); //vider le contenu principal
-
     ajaxRequest('GET','../php/request.php?action=GetNavire',displayNavireTable)
 }
 
 
 function displayNavireTable(response) {
-  console.log(response);
-  
   let html = `
       <h3> Liste des bateaux </h3>
       <table class="container">
