@@ -6,25 +6,24 @@ function clearPage(){ // Permet de vider la page
 
 }
 
-function displayInfos() // Affiche les informations de la page d'accueil
-{
-    
+function displayInfos() {
   clearPage();
   let html = `
-    <img src="../images/Bateau_1.jpeg" alt="logo" style="border-top-right-radius: 40px">
-    <div id="infos-text" class="m-3">
-      <p class="text-center">Bienvenue sur <b>Titre</b></p>
-      <div>
-        <h4>Comment ça marche ?</h4>
-        <p style="text-align: justify;">...texte...</p>
-      </div>
-      <div>
-        <h4>Prediction</h4>
-        <p class="text-justify">...texte...</p>
+    <div id="infos-container">
+      <img src="../images/Bateau_1.jpeg" alt="logo" id="infos-image">
+      <div id="infos-text">
+        <p class="welcome">Bienvenue sur</p>
+        <h4>Projet Big Data / IA / WEB</h4>
+        <p class="description">
+          Analyse et Modélisation des Comportements de Navigation des Navires à partir des Données AIS
+        </p>
+        <h4>Prédiction</h4>
+        <p class="prediction">
+          Le système permet de prévoir la trajectoire probable d'un navire en temps réel, en exploitant les données AIS collectées.
+        </p>
       </div>
     </div>
   `;
   $('#infos').html(html);
-
 }
 

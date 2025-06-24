@@ -18,22 +18,29 @@ footer {
     bottom: 0;
 
 }
-#infos {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Colle les éléments à gauche */
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding-left: 0;
-  margin-left: 0%;
+
+#infos-container-fluid{
+  padding: 0;
 }
 
-#infos > img {
-  max-width: 700px;
-  min-width: 250px;
+#infos-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin: 0 ;
+  padding: 0;
+  max-width: 1200px;
+
+}
+
+
+#infos-image {
+  border-top-right-radius: 40px;
   width: 100%;
+  max-width: 800px;
   height: auto;
-  object-fit: contain;
+  object-fit: cover;
   padding: 0;
   margin-right: 0rem;
   display: block; 
@@ -42,15 +49,56 @@ footer {
 #infos-text {
   flex: 1;
   min-width: 300px;
-  max-width: 600px;
 }
+
+#infos-text .welcome {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#infos-text h4 {
+  color: #12769E;
+  margin-top: 1.5rem;
+}
+
+#infos-text .description,
+#infos-text .prediction {
+  text-align: justify;
+  line-height: 1.6;
+}
+
+/* Responsive pour petits écrans */
+@media (max-width: 768px) {
+  #infos-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #infos-image {
+    max-width: 100%;
+  }
+
+  #infos-text {
+    text-align: center;
+  }
+
+  #infos-text .description,
+  #infos-text .prediction {
+    text-align: center;
+  }
+}
+
+
 .button_slide {
-  background: linear-gradient(to left, #BED3C3 50%, #FFF 50%);
+  background: linear-gradient(to left, #FFF 50%, #BED3C3 50%);
   background-size: 200% 100%;
   background-position: right bottom;
 
   color: #4A919E;
-  border: 2px solid #FFF;
+  border: 2px solid #BED3C3;
   border-radius: 30px;
   padding: 10px 20px;
   display: inline-block;
