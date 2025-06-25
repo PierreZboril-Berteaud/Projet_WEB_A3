@@ -9,6 +9,7 @@ function clearPage(){ // Permet de vider la page
   $('#infos').html('');
   $("#AjoutNavireForm").html('');
   $('#TableauNavire').html('');
+  $('#prediction').html('');
 }
 
 function displayInfos() {

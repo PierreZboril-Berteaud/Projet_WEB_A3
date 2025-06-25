@@ -119,4 +119,32 @@ function dbGetNavire($db){
         }
         return $result;   
     }
+    function dbGetCargo($db, $MMSI){
+        try {
+            $query = "SELECT cargo FROM Bateau WHERE MMSI = :MMSI";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Request error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    function dbGetVesselType($db, $MMSI){
+        try {
+            $query = "SELECT vesseltype FROM Bateau WHERE MMSI = :MMSI";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Request error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    function dbPredictPosition($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time){
+        $cargo = dbGetCargo($db, $MMSI);
+        $vesselType = dbGetVesselType($db, $MMSI);
+    }
 ?>

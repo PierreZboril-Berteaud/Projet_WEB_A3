@@ -105,6 +105,7 @@ function displayNavireTable(response) {
       }
       const data = {
       mmsi: response[selectedIndex].mmsi,
+      date: response[selectedIndex].basedatetime,
       Length: response[selectedIndex].longueur,
       Width: response[selectedIndex].largeur,
       Draft: response[selectedIndex].draft,
@@ -113,10 +114,13 @@ function displayNavireTable(response) {
       sog: response[selectedIndex].sog,
       cog: response[selectedIndex].cog,
       heading: response[selectedIndex].heading,
+      time: time
 
     };
-      
-    //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
+      const queryString = new URLSearchParams(data).toString();
+      console.log(queryString)
+    
+      ajaxRequest('GET', `../php/request.php?action=PredictPosition`, displayPredictionPosition, queryString);
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
@@ -175,6 +179,6 @@ for (let mmsi in navires){
       margin: {t:0, b:0, l:0, r:0}
     });*/
 
-*/
+
 
   }
