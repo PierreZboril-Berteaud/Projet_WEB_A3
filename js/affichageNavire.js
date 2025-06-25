@@ -173,7 +173,7 @@ for (let mmsi in navires){
         zoom:5
       },
       margin: {t:0, b:0, l:0, r:0}
-    });
+    });*/
 
 */
 
