@@ -70,8 +70,10 @@ switch ($requestRessource) {
             $Longueur = htmlspecialchars($_POST['Longueur']);
             $Largeur = htmlspecialchars($_POST['Largeur']);
             $Draft = htmlspecialchars($_POST['Draft']);
+            $VesselType = htmlspecialchars($_POST['VesselType']);
+            $Cargo = htmlspecialchars($_POST['Cargo']);
 
-            $data = dbAddNavire($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft);
+            $data = dbAddNavire($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft, $VesselType, $Cargo);
             if($data != true){
                 header('HTTP/1.1 401 Unauthorized');
                 

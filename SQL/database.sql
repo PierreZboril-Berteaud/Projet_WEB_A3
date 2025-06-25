@@ -9,7 +9,9 @@ CREATE TABLE Bateau (
     NOM VARCHAR(100),
     LONGUEUR float,
     LARGEUR float,
-    DRAFT float
+    DRAFT float,
+    VesselType INT,
+    Cargo INT
 );
 
 CREATE TABLE Historique(
