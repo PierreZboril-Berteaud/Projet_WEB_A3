@@ -14,7 +14,20 @@ function DisplayTablePage(){
 function displayNavireTable(response) {
   let html = `
   <h3> Liste des bateaux </h3>
-  <input type="text" id="filter-name" placeholder="Filtrer par nom de navire" value="${filterName}" style="margin-bottom: 10px; padding: 5px; width: 100%;">
+  <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+  <input type="text" id="filterMMSI" placeholder="Entrez un MMSI..." class="form-control" style="max-width: 300px; flex-shrink: 0;">
+  
+  <label for="limitSelect" style="margin-bottom: 0; white-space: nowrap;">Nombre de bateaux :</label>
+  
+  <select id="limitSelect" class="form-select" style="width: auto; max-width: 100px; flex-shrink: 0;">
+    <option value="10">10</option>
+    <option value="25" selected>25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+  </select>
+  
+  <button id="filterBtn" class="btn btn-primary" style="flex-shrink: 0;">Filtrer</button>
+</div>
   <div class="scroller">
       <table id="tabletable_bateau" class="container">
           <thead>
@@ -38,8 +51,21 @@ function displayNavireTable(response) {
     </div>
           `; 
     $('#TableauNavire').html(html);
+    $('#filterBtn').on('click', function() {
+      let mmsiValue = $('#filterMMSI').val().trim();      // Récupère la valeur du input MMSI
+      const limitValue = $('#limitSelect').val();          // Récupère la valeur sélectionnée dans le select
+      if(!mmsiValue) {
+        mmsiValue = '1'
+      }
+      console.log("MMSI:", mmsiValue);
+      console.log("Limite:", limitValue);
+      ajaxRequest('GET', `../php/request.php?action=GetNavire&limit=${limitValue}&mmsi=${mmsiValue}`, displayNavireTableFiltered);
+    });
+  }
 
-  if (response.length !== 0) {
+
+  function displayNavireTableFiltered(response){
+    if (response.length !== 0) {
   for (let i = 0; i < response.length; i++) {
     let row = `
       <tr data-index="${i}">
@@ -128,4 +154,5 @@ function displayNavireTable(response) {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
   })
-  }
+    
+}

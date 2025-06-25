@@ -71,7 +71,7 @@
     }
 }
 
-function dbGetNavire($db){
+function dbGetNavire($db,$limit){
     try {
         $query = "SELECT 
                 b.mmsi, 
@@ -94,7 +94,7 @@ function dbGetNavire($db){
                 Position p ON h.MMSI = p.MMSI AND h.id_date = p.id_date
             ORDER BY 
                 b.nom, h.basedatetime
-            LIMIT 50;";
+            LIMIT $limit;";
         $stmt = $db->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
