@@ -99,11 +99,27 @@ function displayNavireTable(response) {
   $('#positionButton').click(() => {
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
     if (selectedIndex !== undefined) {
+
+      let timeInput = prompt("Entrez le temps (en secondes) pour la prédiction de position :");
+      let time = parseInt(timeInput);
+      if (isNaN(time) || time <= 0) {
+        alert("Veuillez entrer un nombre valide pour le temps.");
+        return;
+      }
+      const data = {
+      mmsi: response[selectedIndex].mmsi,
+      Length: response[selectedIndex].longueur,
+      Width: response[selectedIndex].largeur,
+      Draft: response[selectedIndex].draft,
+      Latitude: response[selectedIndex].lat,
+      Longitude: response[selectedIndex].lon,
+      sog: response[selectedIndex].sog,
+      cog: response[selectedIndex].cog,
+      heading: response[selectedIndex].heading,
+
+    };
       
-      //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
-    
-      console.log(`Prédiction de la position pour le navire MMSI: ${mmsi}`);
-      console.log(`Prédiction de la position pour le navire MMSI: ${length}`)
+    //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }

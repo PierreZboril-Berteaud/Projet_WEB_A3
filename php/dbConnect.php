@@ -14,7 +14,7 @@
     }
 
     
-    function dbAddNavire($db, $MMSI, $date, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft)
+    function dbAddNavire($db, $MMSI, $date, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft,$VesselType, $Cargo)
     {
     try {
         $db->beginTransaction();
@@ -24,14 +24,16 @@
         $stmtCheck->execute();
 
         if (!$stmtCheck->fetch()) {
-            $queryBateau = "INSERT INTO Bateau (mmsi, nom, longueur, largeur, draft) 
-                            VALUES (:MMSI, :Nom, :Longueur, :Largeur, :Draft)";
+            $queryBateau = "INSERT INTO Bateau (mmsi, nom, longueur, largeur, draft, vesseltype, cargo) 
+                            VALUES (:MMSI, :Nom, :Longueur, :Largeur, :Draft,:VesselType, :Cargo)";
             $stmtBateau = $db->prepare($queryBateau);
             $stmtBateau->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
             $stmtBateau->bindParam(':Nom', $Nom, PDO::PARAM_STR);
             $stmtBateau->bindParam(':Longueur', $Longueur);
             $stmtBateau->bindParam(':Largeur', $Largeur);
             $stmtBateau->bindParam(':Draft', $Draft);
+            $stmtBateau->bindParam(':VesselType', $VesselType);
+            $stmtBateau->bindParam(':Cargo', $Cargo);
             $stmtBateau->execute();
         }
     
