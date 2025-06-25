@@ -146,5 +146,11 @@ function dbGetNavire($db){
     function dbPredictPosition($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time){
         $cargo = dbGetCargo($db, $MMSI);
         $vesselType = dbGetVesselType($db, $MMSI);
+
+        $result = [];
+        $command = escapeshellcmd("python3 ../python/main_fonc_3.py --LAT $latitude --LON $longitude --SOG $SOG --COG $COG --Heading $Heading --Length $longueur --Width $largeur --Draft $draft --Cargo '$cargo' --VesselType '$vesselType' --time '$time'") . " 2>&1" ;
+        exec($command, $result);
+        $result = 0;
+        return $result;
     }
 ?>
