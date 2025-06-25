@@ -129,7 +129,7 @@ switch ($requestRessource) {
             $COG = htmlspecialchars($_POST['COG']);
             $Heading = htmlspecialchars($_POST['Heading']);
             $time = htmlspecialchars($_POST['time']);
-
+            
             $data=dbPredictPosition($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time);
         }
         break;

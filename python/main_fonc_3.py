@@ -26,7 +26,7 @@ if __name__ == '__main__':
         with open('modele.pkl', 'rb') as f:
             model = pickle.load(f)
     else:
-        if args.Train=="True":
+        if args.Train==True:
             print("Entrainement")
             data = pd.read_csv('export_IA.csv')
             model,pred_d= train_trajectory_model(data)
@@ -57,8 +57,8 @@ if __name__ == '__main__':
 
             predicted_delta_lat = predicted_delta[0, 0]
             predicted_delta_lon = predicted_delta[0, 1]
-            print("\nPredicted next position:")
-            print(f"Predicted new LAT: {predicted_delta_lat}")
-            print(f"Predicted new LON: {predicted_delta_lon}")
+            #print("\nPredicted next position:")
+            print(predicted_delta_lat)
+            print(predicted_delta_lon)
         else:
             print("Si vous voulez faire une prédiction, vous devez entrer les valeurs requises")

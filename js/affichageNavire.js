@@ -117,8 +117,10 @@ function displayNavireTable(response) {
       heading: response[selectedIndex].heading,
 
     };
-      
-    //ajaxRequest('GET', `../php/request.php?action=Predict&navire=${mmsi}`, displayPrediction);
+      const queryString = new URLSearchParams(data).toString();
+      console.log(queryString)
+    
+      ajaxRequest('POST', `../php/request.php?action=PredictPosition`, displayPredictionPosition, queryString);
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
