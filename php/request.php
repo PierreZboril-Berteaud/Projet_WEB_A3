@@ -131,7 +131,10 @@ switch ($requestRessource) {
             $time = htmlspecialchars($_POST['time']);
             
             $data=dbPredictPosition($db, $MMSI, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time);
-            #$data="test";
+            $data[] = $date;
+            $data[]  = $time;
+            $data[] = $latitude;
+            $data[] = $longitude;
         }
         break;
     default:
