@@ -13,6 +13,7 @@ function DisplayTablePage(){
 
 function displayNavireTable(response) {
   let html = `
+  <div class="scroller">
       <h3> Liste des bateaux </h3>
       <table id="tabletable_bateau" class="container">
           <thead>
@@ -32,13 +33,16 @@ function displayNavireTable(response) {
                   <th>Prediction</th>
               </tr>
           </thead>
-          </table>
+          <tbody></tbody>
+        </table>
+    </div>
           `; 
-      $('#TableauNavire').html(html);
+  $('#TableauNavire').html(html);
 
   if (response.length !== 0) {
-  for (let i = 0; i < response.length; i++) {
-    let row = `
+  const tbody = $("table.container tbody"); // Cible spécifique
+  response.forEach((item, i) => {
+    tbody.append( `
       <tr data-index="${i}">
         <td>${response[i].mmsi}</td>
         <td>${response[i].basedatetime}</td>
@@ -56,10 +60,9 @@ function displayNavireTable(response) {
           <input type="radio" name="Prediction-Type-Navire" class="predict-radio" data-index="${i}">
         </td>
     </tr>
-    `;
-    $("table.container").append(row);
+    `);
     
-    }
+    });
   }
   
   let button=`
@@ -178,7 +181,5 @@ for (let mmsi in navires){
       },
       margin: {t:0, b:0, l:0, r:0}
     });*/
-
-
 
   }
