@@ -111,6 +111,28 @@ switch ($requestRessource) {
             
         }
         break;
+    case 'PredictPosition':
+        if($req==='POST'){
+
+            $MMSI = htmlspecialchars($_POST['mmsi']);
+            $date = htmlspecialchars($_POST['date']);
+
+            $dateTime = DateTime::createFromFormat('Y-m-d\TH:i:s', $date);
+            $formattedDate = $dateTime->format('Y-m-d H:i:s');
+
+            $longueur = htmlspecialchars($_POST['Length']);
+            $largeur = htmlspecialchars($_POST['Width']);   
+            $draft = htmlspecialchars($_POST['Draft']);
+            $latitude = htmlspecialchars($_POST['latitude']);
+            $longitude = htmlspecialchars($_POST['longitude']);
+            $SOG = htmlspecialchars($_POST['SOG']);
+            $COG = htmlspecialchars($_POST['COG']);
+            $Heading = htmlspecialchars($_POST['Heading']);
+            $time = htmlspecialchars($_POST['time']);
+
+            $data=dbPredictPosition($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time);
+        }
+        break;
     default:
         header('HTTP/1.1 404 Not Found');
         echo json_encode(['error' => 'Action inconnue']);
