@@ -43,19 +43,12 @@
 }
 
 .scroller {
-  max-height: 150px; /* ou la hauteur souhaitée */
-  overflow-y: auto;  /* active le défilement vertical si le contenu dépasse */
-  margin: 10px 0;
-}
-#predictButton, #positionButton {
-  position: fixed; /* ou 'absolute' selon votre besoin */
-  right: 20px;    /* Distance depuis la droite */
-  padding: 10px 20px;
-  background-color: #BED3C3; /* Couleur verte (modifiable) */
-  color: white;
-  border: none;
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 20px 0;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 #predictButton {
@@ -64,6 +57,27 @@
 
 #positionButton {
   top: 350px;
+}
+
+.button-container {
+  position: fixed;
+  right: 20px;
+  top: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+#predictButton, #positionButton {
+  padding: 10px 20px;
+  background-color: #4a6fa5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 /* Style au survol */
