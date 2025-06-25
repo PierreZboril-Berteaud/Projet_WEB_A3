@@ -26,7 +26,6 @@ if (empty($requestRessource)) {
 }
 
 header('Content-Type: application/json');
-
 switch ($requestRessource) {
 
     case 'home':
@@ -93,6 +92,7 @@ switch ($requestRessource) {
             echo json_encode(['error' => 'Méthode non autorisée']);
             exit;
         }
+        break;
     case 'GetNavire':
         if($req==='GET'){
             $data=dbGetNavire($db);
@@ -111,26 +111,30 @@ switch ($requestRessource) {
             
         }
         break;
-    case 'PredictPosition':
+    case 'predictposition':
         if($req==='POST'){
-
+            
             $MMSI = htmlspecialchars($_POST['mmsi']);
             $date = htmlspecialchars($_POST['date']);
 
-            $dateTime = DateTime::createFromFormat('Y-m-d\TH:i:s', $date);
-            $formattedDate = $dateTime->format('Y-m-d H:i:s');
+            /*$dateTime = DateTime::createFromFormat('Y-m-d\TH:i:s', $date);
+            $formattedDate = $dateTime->format('Y-m-d H:i:s');*/
 
-            $longueur = htmlspecialchars($_POST['Length']);
-            $largeur = htmlspecialchars($_POST['Width']);   
-            $draft = htmlspecialchars($_POST['Draft']);
+            $longueur = htmlspecialchars($_POST['length']);
+            $largeur = htmlspecialchars($_POST['width']);   
+            $draft = htmlspecialchars($_POST['draft']);
             $latitude = htmlspecialchars($_POST['latitude']);
             $longitude = htmlspecialchars($_POST['longitude']);
-            $SOG = htmlspecialchars($_POST['SOG']);
-            $COG = htmlspecialchars($_POST['COG']);
-            $Heading = htmlspecialchars($_POST['Heading']);
+            $SOG = htmlspecialchars($_POST['sog']);
+            $COG = htmlspecialchars($_POST['cog']);
+            $Heading = htmlspecialchars($_POST['heading']);
             $time = htmlspecialchars($_POST['time']);
             
-            $data=dbPredictPosition($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time);
+            $data=dbPredictPosition($db, $MMSI, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time);
+            $data[] = $date;
+            $data[]  = $time;
+            $data[] = $latitude;
+            $data[] = $longitude;
         }
         break;
     default:
@@ -138,7 +142,6 @@ switch ($requestRessource) {
         echo json_encode(['error' => 'Action inconnue']);
         exit;
 }
-
 // Réponse JSON
 echo json_encode($data);
 exit;

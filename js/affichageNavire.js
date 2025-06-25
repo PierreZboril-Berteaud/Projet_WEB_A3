@@ -48,6 +48,29 @@ function displayNavireTable(response) {
             <h3>Carte des bateaux</h3>
             <div id="mapDiv" style="height: 600px; border: 1px solid #ddd; border-radius: 4px;"></div>
         </div>
+  let html = `
+  <h3> Liste des bateaux </h3>
+  <input type="text" id="filter-name" placeholder="Filtrer par nom de navire" value="${filterName}" style="margin-bottom: 10px; padding: 5px; width: 100%;">
+  <div class="scroller">
+      <table id="tabletable_bateau" class="container">
+          <thead>
+              <tr>
+                  <th>MMSI</th>
+                  <th>Hordatage</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>SOG</th>
+                  <th>COG</th>
+                  <th>Cap réel</th>
+                  <th>Nom</th>
+                  <th>Etat</th>
+                  <th>Longueur</th>
+                  <th>Largeur</th>
+                  <th>Tirant d'eau</th>
+                  <th>Prediction</th>
+              </tr>
+          </thead>
+        </table>
     </div>
     `; 
     
@@ -107,6 +130,40 @@ function displayNavireTable(response) {
             alert("Veuillez sélectionner un navire pour la prédiction.");
         }
     });
+
+  $('#positionButton').click(() => {
+    let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
+    if (selectedIndex !== undefined) {
+
+      let timeInput = prompt("Entrez le temps (en secondes) pour la prédiction de position :");
+      let time_v = parseInt(timeInput);
+      if (isNaN(time_v) || time_v <= 0) {
+        alert("Veuillez entrer un nombre valide pour le temps.");
+        return;
+      }
+      const data = {
+      mmsi: response[selectedIndex].mmsi,
+      date: response[selectedIndex].basedatetime,
+      length: response[selectedIndex].longueur,
+      width: response[selectedIndex].largeur,
+      draft: response[selectedIndex].draft,
+      latitude: response[selectedIndex].lat,
+      longitude: response[selectedIndex].lon,
+      sog: response[selectedIndex].sog,
+      cog: response[selectedIndex].cog,
+      heading: response[selectedIndex].heading,
+      time: time_v
+    };
+      console.log(data);
+      const query = new URLSearchParams(data).toString();
+      console.log(query)
+    
+      ajaxRequest('POST', `../php/request.php?action=predictposition`, displayPredictionPosition, query);
+    } else {
+      alert("Veuillez sélectionner un navire pour la prédiction.");
+    }
+  })
+  }
 
     $('#positionButton').click(() => {
         let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
