@@ -53,9 +53,10 @@ function displayNavireTable(response) {
             </div>
             
             <div style="display: flex; gap: 10px; margin: 1rem 0;">
+              
+              <button id="plotMapButton" class="btn btn-success">Afficher sur la carte</button>
               <button id="predictButton" class="btn btn-primary">Prédire Le Type</button>
               <button id="positionButton" class="btn btn-primary">Prédire La Position</button>
-              <button id="plotMapButton" class="btn btn-success">Afficher sur la carte</button>
       </div>
         </div>
         
