@@ -93,7 +93,8 @@ function dbGetNavire($db){
             JOIN 
                 Position p ON h.MMSI = p.MMSI AND h.id_date = p.id_date
             ORDER BY 
-                b.nom, h.basedatetime;";
+                b.nom, h.basedatetime
+            LIMIT 50;";
         $stmt = $db->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

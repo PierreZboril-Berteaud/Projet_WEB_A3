@@ -14,6 +14,7 @@ function DisplayTablePage(){
 function displayNavireTable(response) {
   let html = `
   <h3> Liste des bateaux </h3>
+  <input type="text" id="filter-name" placeholder="Filtrer par nom de navire" value="${filterName}" style="margin-bottom: 10px; padding: 5px; width: 100%;">
   <div class="scroller">
       <table id="tabletable_bateau" class="container">
           <thead>
