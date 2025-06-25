@@ -42,3 +42,9 @@
   background-color: rgb(228 240 245);
 }
 
+.scroller {
+  max-height: 500px; /* ou la hauteur souhaitée */
+  overflow-y: 10PX;  /* active le défilement vertical si le contenu dépasse */
+  border: 1px solid #ccc; /* optionnel - pour visualiser le conteneur */
+  margin: 10px 0;
+}
