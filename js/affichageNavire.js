@@ -100,27 +100,29 @@ function displayNavireTable(response) {
     if (selectedIndex !== undefined) {
 
       let timeInput = prompt("Entrez le temps (en secondes) pour la prédiction de position :");
-      let time = parseInt(timeInput);
-      if (isNaN(time) || time <= 0) {
+      let time_v = parseInt(timeInput);
+      if (isNaN(time_v) || time_v <= 0) {
         alert("Veuillez entrer un nombre valide pour le temps.");
         return;
       }
       const data = {
       mmsi: response[selectedIndex].mmsi,
-      Length: response[selectedIndex].longueur,
-      Width: response[selectedIndex].largeur,
-      Draft: response[selectedIndex].draft,
-      Latitude: response[selectedIndex].lat,
-      Longitude: response[selectedIndex].lon,
+      date: response[selectedIndex].basedatetime,
+      length: response[selectedIndex].longueur,
+      width: response[selectedIndex].largeur,
+      draft: response[selectedIndex].draft,
+      latitude: response[selectedIndex].lat,
+      longitude: response[selectedIndex].lon,
       sog: response[selectedIndex].sog,
       cog: response[selectedIndex].cog,
       heading: response[selectedIndex].heading,
-
+      time: time_v
     };
-      const queryString = new URLSearchParams(data).toString();
-      console.log(queryString)
+      console.log(data);
+      const query = new URLSearchParams(data).toString();
+      console.log(query)
     
-      ajaxRequest('POST', `../php/request.php?action=PredictPosition`, displayPredictionPosition, queryString);
+      ajaxRequest('POST', `../php/request.php?action=predictposition`, displayPredictionPosition, query);
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }

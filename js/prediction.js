@@ -20,9 +20,7 @@ function displayPredictPage(response) {
 function displayPredictionPosition(response) {
     clearPage();
     console.log(response);
-    /*        <<li class="list-group-item">Latitude : <strong class="text-primary">${response.latitude}</strong></li>
-        <li class="list-group-item">Longitude : <strong class="text-primary">${response.longitude}</strong></li>
-        <li class="list-group-item">Date : <strong class="text-primary">${response.date}</strong></li>>*/
+           
 
     let html = `
       <div class="card shadow-sm border-primary mb-4">
@@ -32,6 +30,9 @@ function displayPredictionPosition(response) {
     <div class="card-body">
       <p class="card-text">La position prédite du navire est :</p>
       <ul class="list-group">
+      <li class="list-group-item">Latitude : <strong class="text-primary">${response[0]}</strong></li>
+        <li class="list-group-item">Longitude : <strong class="text-primary">${response[1]}</strong></li>
+        <li class="list-group-item">Date : <strong class="text-primary">${response[2]}</strong></li>
       </ul>
     </div>
   </div>
