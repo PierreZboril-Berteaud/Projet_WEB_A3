@@ -95,7 +95,9 @@ switch ($requestRessource) {
         break;
     case 'GetNavire':
         if($req==='GET'){
-            $data=dbGetNavire($db);
+            $limit = $_GET['limit'];
+            $data=dbGetNavire($db,$limit);
+
         }
         break;
     case 'predictType':
