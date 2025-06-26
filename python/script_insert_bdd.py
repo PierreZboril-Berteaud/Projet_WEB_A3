@@ -50,8 +50,8 @@ if __name__ == "__main__":
         conn = psycopg2.connect(
             host="localhost",
             database="projetweba3",
-            user="postgres",
-            password="Isen44N"
+            user="thomas",
+            password="1234"
         )
         for index, row in data.iterrows():
             # Convertir BaseDateTime en datetime Python
