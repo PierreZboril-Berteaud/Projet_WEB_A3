@@ -29,7 +29,8 @@ form {
 body.page-ajout-navire input.form-control,
 body.page-ajout-navire select.form-control,
 body.page-ajout-navire textarea.form-control {
-  background-color: #BED3C3 ; 
+  background-color:#d3d3d3;
+   /*#BED3C3 ;*/ 
 }
 
 #AjoutNavireForm_envoi h3.text-center {
@@ -131,5 +132,33 @@ body.page-ajout-navire textarea.form-control {
   flex-direction: column;
   gap: 10px;
   z-index: 1000;
+}
+
+
+
+
+
+
+#AjoutNavireForm_envoi button {
+  color: #12769E;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 1rem 0 0.5rem 0;
+  padding: 10px 20px; 
+  border-left: 4px solid #4A919E;
+  background: rgba(18, 118, 158, 0.1);
+  box-shadow: 2px 2px 5px rgba(18, 118, 158, 0.1);
+  border-radius: 6px;
+  text-align: left;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+  border: none; 
+  display: inline-block;
+}
+
+#AjoutNavireForm_envoi button:hover {
+  color: #4A919E;
+  background: rgba(18, 118, 158, 0.2);
 }
 
