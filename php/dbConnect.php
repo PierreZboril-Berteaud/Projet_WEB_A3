@@ -212,4 +212,15 @@
         return $result;
         
     }
+    function dbGetLength($db){
+        try {
+            $query = "SELECT COUNT(*) FROM historique";
+            $stmt = $db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Request error: ' . $e->getMessage());
+            return false;
+        }
+    }
 ?>

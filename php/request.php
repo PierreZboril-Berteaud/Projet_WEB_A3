@@ -96,6 +96,7 @@ switch ($requestRessource) {
     case 'GetNavire':
         if($req==='GET'){
             $limit = $_GET['limit'];
+        
             $data=dbGetNavire($db,$limit);
 
         }

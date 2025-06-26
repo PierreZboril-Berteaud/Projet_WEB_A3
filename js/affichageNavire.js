@@ -18,15 +18,15 @@ function displayNavireTable(response) {
   
   <label for="limitSelect" style="margin-bottom: 0; white-space: nowrap;">Nombre de bateaux :</label>
   
-  <select id="limitSelect" class="form-select" style="width: auto; max-width: 100px; flex-shrink: 0;">
-    <option value="10">10</option>
-    <option value="25" selected>25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-    <option value="500">500</option>
-    <option value="1000">1000</option>
-    <option value="10000">10000</option>
-  </select>
+  <input 
+    id="limitSelect" 
+    name="limit" 
+    type="text" 
+    class="form-control" 
+    style="width: 100px;" 
+    placeholder="Ex: 25 ou ALL" 
+    value="25" 
+/>
 
   <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
     <label style="margin-bottom: 0;">Aléatoire :</label>
@@ -107,7 +107,7 @@ function displayNavireTable(response) {
 
 
   function displayNavireTableFiltered(response){
-    
+    console.log(response)
     if (response.length !== 0) {
       let tbody = $('#tabletable_bateau tbody');
       for (let i = 0; i < response.length; i++) {
@@ -151,6 +151,20 @@ function displayNavireTable(response) {
             plotAllBoatsOnMap(response);
         }
     });
+    $('#filterMMSI').on('input', function() {
+  const filter = $(this).val().trim();
+
+  $('#tabletable_bateau tbody tr').each(function() {
+    const mmsiCell = $(this).find('td').eq(0).text().trim();
+
+    // Si le MMSI commence par ce que l'utilisateur tape (ou si input vide, tout afficher)
+    if (mmsiCell.startsWith(filter) || filter === '') {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  });
+});
 
   $('#predictButton').click(() => {
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
