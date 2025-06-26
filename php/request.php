@@ -26,7 +26,6 @@ if (empty($requestRessource)) {
 }
 
 header('Content-Type: application/json');
-
 switch ($requestRessource) {
 
     case 'home':
@@ -70,8 +69,10 @@ switch ($requestRessource) {
             $Longueur = htmlspecialchars($_POST['Longueur']);
             $Largeur = htmlspecialchars($_POST['Largeur']);
             $Draft = htmlspecialchars($_POST['Draft']);
+            $VesselType = htmlspecialchars($_POST['VesselType']);
+            $Cargo = htmlspecialchars($_POST['Cargo']);
 
-            $data = dbAddNavire($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft);
+            $data = dbAddNavire($db, $MMSI, $formattedDate, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft, $VesselType, $Cargo);
             if($data != true){
                 header('HTTP/1.1 401 Unauthorized');
                 
@@ -91,27 +92,58 @@ switch ($requestRessource) {
             echo json_encode(['error' => 'Méthode non autorisée']);
             exit;
         }
+        break;
     case 'GetNavire':
         if($req==='GET'){
-            $data=dbGetNavire($db);
+            $limit = $_GET['limit'];
+            $data=dbGetNavire($db,$limit);
+
         }
         break;
     case 'predictType':
+        
         if($req==='POST'){
-            $MMSI = htmlspecialchars($_POST['MMSI']);
-            $Longueur = htmlspecialchars($_POST['Longueur']);
-            $Largeur = htmlspecialchars($_POST['Largeur']);
+
+            $MMSI = htmlspecialchars($_POST['mmsi']);
+            $Longueur = htmlspecialchars($_POST['Length']);
+            $Largeur = htmlspecialchars($_POST['Width']);
             $Draft = htmlspecialchars($_POST['Draft']);
-            $data=dbGetTypePrediction($MMSI,$Longueur,$Largeur,$Draft);
-            echo "data";
-            echo $data;
+            
+            $data=dbGetTypePrediction($Longueur,$Largeur,$Draft);
+            
         }
+        break;
+    case 'predictposition':
+        if($req==='POST'){
+            
+            $MMSI = htmlspecialchars($_POST['mmsi']);
+            $date = htmlspecialchars($_POST['date']);
+
+            /*$dateTime = DateTime::createFromFormat('Y-m-d\TH:i:s', $date);
+            $formattedDate = $dateTime->format('Y-m-d H:i:s');*/
+
+            $longueur = htmlspecialchars($_POST['length']);
+            $largeur = htmlspecialchars($_POST['width']);   
+            $draft = htmlspecialchars($_POST['draft']);
+            $latitude = htmlspecialchars($_POST['latitude']);
+            $longitude = htmlspecialchars($_POST['longitude']);
+            $SOG = htmlspecialchars($_POST['sog']);
+            $COG = htmlspecialchars($_POST['cog']);
+            $Heading = htmlspecialchars($_POST['heading']);
+            $time = htmlspecialchars($_POST['time']);
+            
+            $data=dbPredictPosition($db, $MMSI, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time);
+            $data[] = $date;
+            $data[]  = $time;
+            $data[] = $latitude;
+            $data[] = $longitude;
+        }
+        break;
     default:
         header('HTTP/1.1 404 Not Found');
         echo json_encode(['error' => 'Action inconnue']);
         exit;
 }
-
 // Réponse JSON
 echo json_encode($data);
 exit;

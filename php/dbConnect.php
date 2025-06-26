@@ -14,7 +14,7 @@
     }
 
     
-    function dbAddNavire($db, $MMSI, $date, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft)
+    function dbAddNavire($db, $MMSI, $date, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft,$VesselType, $Cargo)
     {
     try {
         $db->beginTransaction();
@@ -24,14 +24,16 @@
         $stmtCheck->execute();
 
         if (!$stmtCheck->fetch()) {
-            $queryBateau = "INSERT INTO Bateau (mmsi, nom, longueur, largeur, draft) 
-                            VALUES (:MMSI, :Nom, :Longueur, :Largeur, :Draft)";
+            $queryBateau = "INSERT INTO Bateau (mmsi, nom, longueur, largeur, draft, vesseltype, cargo) 
+                            VALUES (:MMSI, :Nom, :Longueur, :Largeur, :Draft,:VesselType, :Cargo)";
             $stmtBateau = $db->prepare($queryBateau);
             $stmtBateau->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
             $stmtBateau->bindParam(':Nom', $Nom, PDO::PARAM_STR);
             $stmtBateau->bindParam(':Longueur', $Longueur);
             $stmtBateau->bindParam(':Largeur', $Largeur);
             $stmtBateau->bindParam(':Draft', $Draft);
+            $stmtBateau->bindParam(':VesselType', $VesselType);
+            $stmtBateau->bindParam(':Cargo', $Cargo);
             $stmtBateau->execute();
         }
     
@@ -69,7 +71,7 @@
     }
 }
 
-function dbGetNavire($db){
+function dbGetNavire($db,$limit){
     try {
         $query = "SELECT 
                 b.mmsi, 
@@ -91,7 +93,8 @@ function dbGetNavire($db){
             JOIN 
                 Position p ON h.MMSI = p.MMSI AND h.id_date = p.id_date
             ORDER BY 
-                b.nom, h.basedatetime;";
+                b.nom, h.basedatetime
+            LIMIT $limit;";
         $stmt = $db->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -104,10 +107,61 @@ function dbGetNavire($db){
 
 
 
-    function dbGetTypePrediction($MMSI,$Longueur,$Largeur,$Draft){
+    function dbGetTypePrediction($Longueur,$Largeur,$Draft){
         $result=[];
         $command = "python3 ../python/main_fonc_2.py --Predict True --Model RandomForest --Length $Longueur --Width $Largeur --Draft $Draft";
+        #escapeshellcmd("python3 ../python/main_fonc_2.py --Predict True --Model RandomForest --Length $Longueur --Width $Largeur --Draft $Draft") . " 2>&1" //Pour tester erreurs
+
+        #$command = "python3 ../python/test.py";
         exec($command, $result);
+
+        if (empty($result)) {
+            return false;
+        }
         return $result;   
+    }
+    function dbGetCargo($db, $MMSI){
+        try {
+            $query = "SELECT cargo FROM Bateau WHERE MMSI = :MMSI";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Request error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    function dbGetVesselType($db, $MMSI){
+        try {
+            $query = "SELECT vesseltype FROM Bateau WHERE MMSI = :MMSI";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Request error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    function dbPredictPosition($db, $MMSI, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time){
+        $cargo = dbGetCargo($db, $MMSI);
+        $vesselType = dbGetVesselType($db, $MMSI);
+
+        $result = [];
+        $command = "python3 ../python/main_fonc_3.py"
+            . " --LAT $latitude"
+            . " --LON $longitude"
+            . " --SOG $SOG"
+            . " --COG $COG"
+            . " --Heading $Heading"
+            . " --VesselType $vesselType"
+            . " --Length $longueur"
+            . " --Width $largeur"
+            . " --Draft $draft"
+            . " --Cargo $cargo"
+            . " --time $time";
+        exec($command, $result);
+        return $result;
     }
 ?>

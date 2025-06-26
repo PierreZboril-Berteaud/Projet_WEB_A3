@@ -67,10 +67,20 @@ function displayAjoutNavire() {
         </div>
       </div>
 
-      <div class="mb-3">
+    <div class="row mb-3">
+      <div class="col">
         <label for="Nom" class="form-label">Nom du navire</label>
         <input type="text" class="form-control" id="Nom" name="Nom" required>
       </div>
+      <div class="col">
+        <label for="VesselType" class="form-label">Type de Navire</label>
+        <input type="number" class="form-control" id="VesselType" min="0" max="89" name="VesselType" required>
+      </div>
+      <div class="col">
+        <label for="Cargo" class="form-label">Cargo</label>
+        <input type="number" class="form-control" id="Cargo" min="0" max="89" name="Cargo" required>
+      </div>
+    </div>
 
       <div class="mb-3">
         <label for="Etat" class="form-label">État</label>
@@ -115,7 +125,9 @@ function displayAjoutNavire() {
       Etat: $("#Etat").val(),
       Longueur: $("#Longueur").val(),
       Largeur: $("#Largeur").val(),
-      Draft: $("#TirantEau").val()
+      Draft: $("#TirantEau").val(),
+      VesselType: $("#VesselType").val(),
+      Cargo: $("#Cargo").val()
     };
 
     const queryString = new URLSearchParams(data).toString();

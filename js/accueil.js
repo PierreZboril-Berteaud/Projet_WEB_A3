@@ -7,8 +7,9 @@ $('#Accueil').click(() => {
 
 function clearPage(){ 
   $('#infos').html('');
-  $('#AjoutNavireForm').html('');
+  $("#AjoutNavireForm").html('');
   $('#TableauNavire').html('');
+  $('#prediction').html('');
 }
 
 function displayInfos() {

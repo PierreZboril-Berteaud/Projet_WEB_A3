@@ -93,7 +93,7 @@ def train_trajectory_model(data):
     print(f"R² sur la LAT  : {score_lat:.3f}")
     print(f"R² sur la LON  : {score_lon:.3f}")
 
-    with open('modele.pkl', 'wb') as f:
+    with open('../model/modele.pkl', 'wb') as f:
         pickle.dump(model, f)
 
     return model,pred_df
