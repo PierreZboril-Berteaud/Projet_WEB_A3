@@ -78,6 +78,16 @@ function minsec(data){
 
 function displayClusterResults(response) {
   clearPage();
+  let html = `
+      <div id="card-prediction" class="card shadow-sm border-primary mb-4"style="max-width: 700px; max-height:1000px;margin: auto; padding-bottom: 60px;">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">Prédiction des clusters</h2>
+    </div>
+      <div id="map2" style="height: 400px; width: 100%; margin-top: 15px;"></div>
+  </div>
+
+    `;
+  $("#prediction").html(html);
   setTimeout(() => {
     const map2 = L.map('map2').setView([25, -90], 5); // Golfe du Mexique
 
