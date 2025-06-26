@@ -72,26 +72,7 @@
   border-radius: 4px;
 }
 
-/* Animation subtile pour les mises à jour */
-@keyframes subtleFlash {
-  0% { background-color: rgba(228, 240, 245, 0.8); }
-  100% { background-color: inherit; }
-}
 
 .updated-row {
   animation: subtleFlash 1s ease-out;
-}
-
-/* Adaptation responsive */
-@media (max-width: 768px) {
-  #tabletable_bateau th,
-  #tabletable_bateau td {
-    padding: 10px 8px; /* Réduction sur mobile */
-    font-size: 0.75rem;
-  }
-}
-
-#filterMMSI{
-
- margin: 12 px;
 }

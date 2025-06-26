@@ -47,28 +47,29 @@ function displayNavireTable(response) {
         <div class="col-md-12">
             <h3 class="text-center mb-6"  >Liste des bateaux</h3>
             <div class="scroller">
-                <table id="tabletable_bateau" class="container">
-                    <thead>
-                        <tr>
-                            <th>MMSI</th>
-                            <th>Hordatage</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
-                            <th>SOG</th>
-                            <th>COG</th>
-                            <th>Cap réel</th>
-                            <th>Nom</th>
-                            <th>Etat</th>
-                            <th>Longueur</th>
-                            <th>Largeur</th>
-                            <th>Tirant d'eau</th>
-                            <th>Prediction</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            
+    <table id="tabletable_bateau" class="container">
+        <thead>
+            <tr>
+                <th>MMSI</th>
+                <th>Hordatage</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>SOG</th>
+                <th>COG</th>
+                <th>Cap réel</th>
+                <th>Nom</th>
+                <th>Etat</th>
+                <th>Longueur</th>
+                <th>Largeur</th>
+                <th>Tirant d'eau</th>
+                <th>Prediction</th>
+            </tr>
+        </thead>
+        <tbody id="bateau-body">
+        </tbody>
+    </table>
+</div>
+         
             <div style="display: flex; gap: 10px; margin: 1rem 0;">
               
               <button id="plotMapButton" class="btn btn-success">Afficher sur la carte</button>
@@ -106,9 +107,6 @@ function displayNavireTable(response) {
       }
     });
   }
-</div>
-    </div>
-          `;
   $('#TableauNavire').html(html);
   $('#filterBtn').on('click', function () {
     let mmsiValue = $('#filterMMSI').val().trim();      // Récupère la valeur du input MMSI
@@ -120,7 +118,6 @@ function displayNavireTable(response) {
     console.log("Limite:", limitValue);
     ajaxRequest('GET', `../php/request.php?action=GetNavire&limit=${limitValue}&mmsi=${mmsiValue}`, displayNavireTableFiltered);
   });
-}
 
 
 
