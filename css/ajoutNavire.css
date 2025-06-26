@@ -1,3 +1,20 @@
+body.page-ajout-navire {
+    background-image: url('../images/Bateau_5.jpg');
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;        
+    background-repeat: no-repeat;   
+    background-color: #000;         
+    min-height: 100vh;             
+}
+
+
+body {
+    background-image: none;
+    background-color: #fff; 
+}
+
+
 form {
       background: white;
       padding: 20px 20px;
@@ -9,7 +26,24 @@ form {
     }
 
 
-/*PAGE TABLEAU NAVIRE*/
+body.page-ajout-navire input.form-control,
+body.page-ajout-navire select.form-control,
+body.page-ajout-navire textarea.form-control {
+  background-color: #BED3C3 ; 
+}
+
+#AjoutNavireForm_envoi h3.text-center {
+    text-transform: uppercase;
+    text-align: center;
+    color: #0077be;
+    font-size: 2rem;
+    font-weight: bold;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
 
 #bateauxTable {
     width: 100%;
@@ -50,6 +84,28 @@ form {
 #predictButton{
   margin-top: 5%;
 }
-#positionButton{
-  margin-top: 5%
+
+
+.btn.btn-primary {
+ display: inline-block;
+    padding: 10px 20px;
+    background-color: #e6f7ff;
+    color: #0077be;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-left: 5px solid #0077be;
+    margin: 20px auto;
+    text-align: center;
+    width: auto;
+}
+
+
+.btn.btn-primary:hover {
+  background-color: #007acc;      
+  transform: translateY(-2px);
+}
+
+.btn.btn-primary:active {
+  background-color: #005c99;
+  transform: scale(0.98);
 }
