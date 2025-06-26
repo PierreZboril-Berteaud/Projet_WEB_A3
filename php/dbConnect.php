@@ -164,4 +164,18 @@ function dbGetNavire($db,$limit){
         exec($command, $result);
         return $result;
     }
+    function dbPredictClusters($latitude, $longitude, $SOG, $COG, $Heading){
+        $result = [];
+        $command = "python3 ../python/main_fonc_1.py"
+            . " --Predict True"
+            . ' --Model Kmeans'
+            . " --LAT $latitude"
+            . " --LON $longitude"
+            . " --SOG $SOG"
+            . " --COG $COG"
+            . " --Heading $Heading";
+        exec($command, $result);
+        return $result;
+        
+    }
 ?>

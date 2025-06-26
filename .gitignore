@@ -5,3 +5,6 @@ php/constants.php
 php/constants.php
 python/modele.pkl
 model/modele.pkl
+model/kmeans.pkl
+model/scaler_kmeans.pkl
+Projet IA/scaler.pkl

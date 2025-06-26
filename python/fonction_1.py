@@ -129,6 +129,8 @@ def Kmeans_train(data, k):
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)  # Standardisation (moyenne=0, écart-type=1)
     X_scaled = pd.DataFrame(X_scaled, columns=X.columns)  # Reconversion en DataFrame
+    with open('../model/scaler_kmeans.pkl', 'wb') as f:
+        pickle.dump(scaler, f)
     
     # Initialisation et entraînement du modèle K-means :
     # n_clusters=k : nombre de clusters souhaités
@@ -138,7 +140,7 @@ def Kmeans_train(data, k):
     kmeans.fit(X_scaled)  # Application de l'algorithme
 
     # Sauvegarde du modèle entraîné dans un fichier pickle
-    with open('kmeans.pkl', 'wb') as f:
+    with open('../model/kmeans.pkl', 'wb') as f:
         pickle.dump(kmeans, f)
 
     print("End K-means")  # Message de fin du traitement

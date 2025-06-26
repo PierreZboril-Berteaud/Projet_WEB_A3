@@ -60,7 +60,8 @@ function displayNavireTable(response) {
               <button id="plotMapButton" class="btn btn-success">Afficher sur la carte</button>
               <button id="predictButton" class="btn btn-primary">Prédire Le Type</button>
               <button id="positionButton" class="btn btn-primary">Prédire La Position</button>
-      </div>
+              <button id="clusterButton" class="btn btn-primary">Prédire Les clusters</button>
+            </div>
         </div>
         
         <div class="col-md-6">
@@ -186,8 +187,52 @@ function displayNavireTable(response) {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
   })
+    $('#clusterButton').click(() => {
+    if (!response || response.length === 0) {
+      alert("Aucun navire disponible pour le clustering.");
+      return;
+    }
+    // Tout les bateaux présents dans la table sont mis dans ce navire 
+    const clusterData = response.map(boat => ({
+      mmsi: boat.mmsi,
+      latitude: boat.lat,
+      longitude: boat.lon,
+      sog: boat.sog,
+      cog: boat.cog,
+      heading: boat.heading,
+    }));
+    console.log(clusterData)
+    // Envoyer la requête AJAX pour demander le clustering
+    data_j = JSON.stringify(clusterData);
+    ajaxRequest('POST','../php/request.php?action=predictclusters',displayClusterResults,data_j);
+  });
+
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function plotAllBoatsOnMap(response) {

@@ -139,6 +139,32 @@ switch ($requestRessource) {
             $data[] = $longitude;
         }
         break;
+    case 'predictclusters':
+        if($req==='POST'){
+            $jsonData = file_get_contents("php://input");
+            $navires = json_decode($jsonData, true);
+            $results = [];
+
+            foreach ($navires as $navire) {
+                $MMSI = htmlspecialchars($navire['mmsi']);
+                $latitude = htmlspecialchars($navire['latitude']);
+                $longitude = htmlspecialchars($navire['longitude']);
+                $SOG = htmlspecialchars($navire['sog']);
+                $COG = htmlspecialchars($navire['cog']);
+                $Heading = htmlspecialchars($navire['heading']);
+
+                $cluster = dbPredictClusters($latitude, $longitude, $SOG, $COG, $Heading);
+                $results[] = [
+                    'mmsi' => $MMSI,
+                    'cluster' => $cluster,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude
+                ];
+                
+            }
+            $data = $results;
+        }
+        break;
     default:
         header('HTTP/1.1 404 Not Found');
         echo json_encode(['error' => 'Action inconnue']);
