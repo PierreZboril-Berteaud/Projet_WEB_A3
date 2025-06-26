@@ -204,6 +204,7 @@ function displayNavireTable(response) {
     console.log(clusterData)
     // Envoyer la requête AJAX pour demander le clustering
     data_j = JSON.stringify(clusterData);
+
     ajaxRequest('POST','../php/request.php?action=predictclusters',displayClusterResults,data_j);
   });
 
