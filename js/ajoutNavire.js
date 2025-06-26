@@ -104,6 +104,7 @@ function displayAjoutNavire() {
 
       <div class="text-center">
         <button type="submit" class="btn btn-primary">Ajouter Le Navire</button>
+        <button type="button" id="SupprimerNavire" class="btn btn-danger">Supprimer Le Navire</button>
       </div>
     </form>
 
@@ -111,6 +112,8 @@ function displayAjoutNavire() {
   `;
 
   $("#AjoutNavireForm").html(html);
+
+  
 
   $('#MMSI').on('blur', function() {
   const mmsi = $(this).val().trim();
@@ -155,6 +158,29 @@ function displayAjoutNavire() {
 
     ajaxRequest('POST', '../php/request.php?action=ajoutNavireBdd', addNavireResponse, queryString);
   });
+
+  $('#SupprimerNavire').click(() => {
+    // Récupérer les données du formulaire
+    const data = {
+      MMSI: $("#MMSI").val()
+    };
+
+    // Confirmer la suppression
+    if (confirm("Êtes-vous sûr de vouloir supprimer ce navire et toutes ses données ?")) {
+      const queryString = new URLSearchParams(data).toString();
+      ajaxRequest('POST', '../php/request.php?action=supprimerNavireBdd', deleteNavireResponse, queryString);
+    }
+  });
+}
+
+function deleteNavireResponse(response){
+  if(response == true){
+    alert("Navire supprimé avec succès !");
+    ajaxRequest('GET', '../php/request.php?action=home', displayAjoutNavire); // appel d’une vraie fonction page d’accueil
+  }
+  else{
+    alert("Erreur lors de la suppression du navire : ");
+  }
 }
 
 function fillNavireFields(response) {

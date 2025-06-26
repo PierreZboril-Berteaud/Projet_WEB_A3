@@ -243,6 +243,11 @@ function renderTablePage() {
   });
 }
 
+
+
+
+
+
 function renderPagination() {
   const totalPages = Math.ceil(navireData.length / rowsPerPage);
   const pagination = $('#pagination');
@@ -303,6 +308,13 @@ function renderPagination() {
     }
   });
 }
+
+
+
+
+
+
+
 
 
 function plotAllBoatsOnMap(response) {

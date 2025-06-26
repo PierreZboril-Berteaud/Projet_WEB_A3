@@ -188,6 +188,24 @@ switch ($requestRessource) {
             exit;
         }
         break;
+    case 'supprimerNavireBdd':
+        if($req==='POST'){
+            
+            $MMSI = htmlspecialchars($_POST['MMSI']);
+
+
+            
+
+            $data = dbDeleteNavire($db, $MMSI);
+            if($data != true){
+                header('HTTP/1.1 401 Unauthorized');
+            }
+            else{
+                header('HTTP/1.1 200 OK');
+            }
+            $data=true;
+        }
+        break;
     default:
         header('HTTP/1.1 404 Not Found');
         echo json_encode(['error' => 'Action inconnue']);
