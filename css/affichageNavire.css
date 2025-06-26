@@ -47,26 +47,3 @@
   overflow-y: auto;  /* active le défilement vertical si le contenu dépasse */
   margin: 10px 0;
 }
-#predictButton, #positionButton {
-  position: fixed; /* ou 'absolute' selon votre besoin */
-  right: 20px;    /* Distance depuis la droite */
-  padding: 10px 20px;
-  background-color: #BED3C3; /* Couleur verte (modifiable) */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-#predictButton {
-  top: 300px;
-}
-
-#positionButton {
-  top: 350px;
-}
-
-/* Style au survol */
-#predictButton:hover, #positionButton:hover {
-  background-color: #ABC1B0;
-}
