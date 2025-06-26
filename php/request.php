@@ -96,8 +96,15 @@ switch ($requestRessource) {
     case 'GetNavire':
         if($req==='GET'){
             $limit = $_GET['limit'];
+        
             $data=dbGetNavire($db,$limit);
 
+        }
+        break;
+    case 'GetNavireRd':
+        if($req==='GET'){
+            $limit = $_GET['limit'];
+            $data=dbGetNavireRd($db,$limit);
         }
         break;
     case 'predictType':
@@ -137,6 +144,32 @@ switch ($requestRessource) {
             $data[]  = $time;
             $data[] = $latitude;
             $data[] = $longitude;
+        }
+        break;
+    case 'predictclusters':
+        if($req==='POST'){
+            $jsonData = file_get_contents("php://input");
+            $navires = json_decode($jsonData, true);
+            $results = [];
+
+            foreach ($navires as $navire) {
+                $MMSI = htmlspecialchars($navire['mmsi']);
+                $latitude = htmlspecialchars($navire['latitude']);
+                $longitude = htmlspecialchars($navire['longitude']);
+                $SOG = htmlspecialchars($navire['sog']);
+                $COG = htmlspecialchars($navire['cog']);
+                $Heading = htmlspecialchars($navire['heading']);
+
+                $cluster = dbPredictClusters($latitude, $longitude, $SOG, $COG, $Heading);
+                $results[] = [
+                    'mmsi' => $MMSI,
+                    'cluster' => $cluster,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude
+                ];
+                
+            }
+            $data = $results;
         }
         break;
     default:

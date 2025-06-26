@@ -112,6 +112,29 @@ footer {
   }
 
 
+#infos-text .welcome {
+  font-size: 2.5rem; 
+  font-weight: 900; 
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 2px; 
+  background: linear-gradient(90deg, #12769E, #4A919E, #BED3C3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-out forwards;
+  opacity: 0; 
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
 
 #infos-text h4 {
   color: #12769E;

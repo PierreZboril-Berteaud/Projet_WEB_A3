@@ -18,15 +18,29 @@ function displayNavireTable(response) {
   
   <label for="limitSelect" style="margin-bottom: 0; white-space: nowrap;">Nombre de bateaux :</label>
   
-  <select id="limitSelect" class="form-select" style="width: auto; max-width: 100px; flex-shrink: 0;">
-    <option value="10">10</option>
-    <option value="25" selected>25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-    <option value="500">500</option>
-    <option value="1000">1000</option>
-    <option value="10000">10000</option>
-  </select>
+  <input 
+    id="limitSelect" 
+    name="limit" 
+    type="text" 
+    class="form-control" 
+    style="width: 100px;" 
+    placeholder="Ex: 25 ou ALL" 
+    value="25" 
+/>
+
+  <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+    <label style="margin-bottom: 0;">Aléatoire :</label>
+    <div>
+      <input type="radio" id="randomYes" name="randomSelect" value="yes">
+      <label for="randomYes">Oui</label>
+    </div>
+    <div>
+      <input type="radio" id="randomNo" name="randomSelect" value="no" checked>
+      <label for="randomNo">Non</label>
+    </div>
+  </div>
+
+  
   
   <button id="filterBtn" class="btn btn-primary" style="flex-shrink: 0;">Filtrer</button>
 <div class="row">
@@ -60,7 +74,8 @@ function displayNavireTable(response) {
               <button id="plotMapButton" class="btn btn-success">Afficher sur la carte</button>
               <button id="predictButton" class="btn btn-primary">Prédire Le Type</button>
               <button id="positionButton" class="btn btn-primary">Prédire La Position</button>
-      </div>
+              <button id="clusterButton" class="btn btn-primary">Prédire Les clusters</button>
+            </div>
         </div>
         
         <div class="col-md-6">
@@ -72,21 +87,27 @@ function displayNavireTable(response) {
           `; 
     $('#TableauNavire').html(html);
     $('#filterBtn').on('click', function() {
+      
       let mmsiValue = $('#filterMMSI').val().trim();      // Récupère la valeur du input MMSI
       const limitValue = $('#limitSelect').val();          // Récupère la valeur sélectionnée dans le select
+      const isRandom = $('input[name="randomSelect"]:checked').val(); // "yes" ou "no"
+
       if(!mmsiValue) {
         mmsiValue = '1'
       }
-      console.log("MMSI:", mmsiValue);
-      console.log("Limite:", limitValue);
+      if (isRandom === 'no') {
       ajaxRequest('GET', `../php/request.php?action=GetNavire&limit=${limitValue}&mmsi=${mmsiValue}`, displayNavireTableFiltered);
+      }
+      else{
+        ajaxRequest('GET', `../php/request.php?action=GetNavireRd&limit=${limitValue}&mmsi=${mmsiValue}`, displayNavireTableFiltered);
+      }
     });
   }
 
 
 
   function displayNavireTableFiltered(response){
-    
+    console.log(response)
     if (response.length !== 0) {
       let tbody = $('#tabletable_bateau tbody');
       for (let i = 0; i < response.length; i++) {
@@ -130,6 +151,20 @@ function displayNavireTable(response) {
             plotAllBoatsOnMap(response);
         }
     });
+    $('#filterMMSI').on('input', function() {
+  const filter = $(this).val().trim();
+
+  $('#tabletable_bateau tbody tr').each(function() {
+    const mmsiCell = $(this).find('td').eq(0).text().trim();
+
+    // Si le MMSI commence par ce que l'utilisateur tape (ou si input vide, tout afficher)
+    if (mmsiCell.startsWith(filter) || filter === '') {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  });
+});
 
   $('#predictButton').click(() => {
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
@@ -186,8 +221,53 @@ function displayNavireTable(response) {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
   })
+    $('#clusterButton').click(() => {
+    if (!response || response.length === 0) {
+      alert("Aucun navire disponible pour le clustering.");
+      return;
+    }
+    // Tout les bateaux présents dans la table sont mis dans ce navire 
+    const clusterData = response.map(boat => ({
+      mmsi: boat.mmsi,
+      latitude: boat.lat,
+      longitude: boat.lon,
+      sog: boat.sog,
+      cog: boat.cog,
+      heading: boat.heading,
+    }));
+    console.log(clusterData)
+    // Envoyer la requête AJAX pour demander le clustering
+    data_j = JSON.stringify(clusterData);
+
+    ajaxRequest('POST','../php/request.php?action=predictclusters',displayClusterResults,data_j);
+  });
+
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function plotAllBoatsOnMap(response) {

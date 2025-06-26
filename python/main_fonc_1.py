@@ -3,7 +3,7 @@ from fonction_1 import *
 if __name__ == '__main__':
     k=3
 
-    data = nettoyage_donnees_AIS('./export_IA.csv')
+
     warnings.filterwarnings("ignore", category=UserWarning)
     parser = argparse.ArgumentParser(description="Mon programme avec options")
     parser.add_argument("--LAT", type=float, nargs="?", help="Lattitude du navire", required=False)
@@ -22,9 +22,10 @@ if __name__ == '__main__':
 
     if args.Train:
         if args.Model=="Kmeans":
+            data = nettoyage_donnees_AIS('../export_IA.csv')
             data,X_scaled = Kmeans_train(data,k)
     else:
-        with open('kmeans.pkl', 'rb') as f:
+        with open('../model/kmeans.pkl', 'rb') as f:
             kmeans = pickle.load(f)
     if args.Score:
         Kmeans_score(kmeans,data,k)
@@ -43,11 +44,11 @@ if __name__ == '__main__':
 
         new_data_df = pd.DataFrame([new_data])
 
-        with open('scaler.pkl', 'rb') as f:
+        with open('../model/scaler_kmeans.pkl', 'rb') as f:
             scaler = pickle.load(f)
 
         new_data_scaled = scaler.transform(new_data_df)
 
         y_pred = predict_kmeans(new_data_scaled, kmeans)
-        print("Prediction : ",  y_pred[0])
+        print(y_pred[0])
 
