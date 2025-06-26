@@ -13,7 +13,7 @@ function DisplayTablePage(){
 
 function displayNavireTable(response) {
   let html = `
-  <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+  <div style="display: flex; align-items: center; gap: 10px;  margin-top: 10px; flex-wrap: wrap;">
   <input type="text" id="filterMMSI" placeholder="Entrez un MMSI..." class="form-control" style="max-width: 300px; flex-shrink: 0;">
   
   <label for="limitSelect" style="margin-bottom: 0; white-space: nowrap;">Nombre de bateaux :</label>
@@ -44,8 +44,8 @@ function displayNavireTable(response) {
   
   <button id="filterBtn" class="btn btn-primary" style="flex-shrink: 0;">Filtrer</button>
 <div class="row">
-        <div class="col-md-6">
-            <h3>Liste des bateaux</h3>
+        <div class="col-md-12">
+            <h3 style="text-align: center;">Liste des bateaux</h3>
             <div class="scroller">
     <table id="tabletable_bateau" class="container">
         <thead>
@@ -79,11 +79,12 @@ function displayNavireTable(response) {
             </div>
         </div>
         
-        <div class="col-md-6">
-            <h3>Carte des bateaux</h3>
-            <div id="mapDiv" style="height: 600px; border: 1px solid #ddd; border-radius: 4px;"></div>
-        </div>
+        
     </div>
+    <div class="col-md-6">
+            <h3 style="text-align: center;">Carte des bateaux</h3>
+            <div id="mapDiv" style="height: 600px; border: 1px solid #ddd;margin: 0 auto;text-align: center; border-radius: 4px;"></div>
+        </div>
     
           `; 
     $('#TableauNavire').html(html);
