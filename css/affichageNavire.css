@@ -1,49 +1,97 @@
-#tabletable_bateau{
+/* Style global du tableau - couleurs conservées */
+#tabletable_bateau {
   border-collapse: collapse;
-  border: 2px solid rgb(140 140 140);
+  border: 2px solid rgb(140, 140, 140);
   font-family: sans-serif;
   font-size: 0.8rem;
   letter-spacing: 1px;
   width: 100%;
   margin: 20px 0;
+  background-color: white;
 }
 
-
+/* Cellules - couleurs conservées */
 #tabletable_bateau th,
 #tabletable_bateau td {
   border: 1px solid rgb(160, 160, 160);
-  padding: 10px 12px;
-  transition: background-color 0.2s ease;
+  padding: 12px 15px; /* Légèrement augmenté pour meilleure lisibilité */
+  transition: all 0.2s ease;
 }
 
+/* En-têtes - couleurs conservées */
 #tabletable_bateau th {
   background-color: rgb(228, 240, 245);
+  color: #2c3e50;
   font-weight: 600;
   text-transform: uppercase;
-  color: #2c3e50;
   position: sticky;
   top: 0;
+  box-shadow: 0 2px 2px -1px rgba(0,0,0,0.1); /* Ajout subtil pour le sticky */
 }
 
+/* Cellules de données - couleurs conservées */
 #tabletable_bateau td {
   color: #34495e;
 }
 
-
+/* Dernière cellule - conservation du centrage */
 #tabletable_bateau td:last-of-type {
   text-align: center;
 }
 
+/* Lignes paires - couleur conservée */
 #tabletable_bateau tr:nth-of-type(even) {
-  background-color: rgb(237 238 242);
+  background-color: rgb(237, 238, 242);
 }
 
-#tabletable_bateau thead {
-  background-color: rgb(228 240 245);
+/* Amélioration du survol */
+#tabletable_bateau tr:hover td {
+  background-color: rgba(228, 240, 245, 0.5); /* Variante légère de votre bleu */
 }
 
+/* Conteneur avec défilement amélioré */
 .scroller {
-  max-height: 150px; /* ou la hauteur souhaitée */
-  overflow-y: auto;  /* active le défilement vertical si le contenu dépasse */
-  margin: 10px 0;
+  max-height: 600px;
+  overflow-y: auto;
+  margin: 15px 0;
+  border: 1px solid rgb(210, 210, 210);
+  border-radius: 4px;
+}
+
+/* Barre de défilement stylisée (discrete) */
+.scroller::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroller::-webkit-scrollbar-track {
+  background: rgb(237, 238, 242); /* Couleur de fond des lignes paires */
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  background-color: rgb(160, 160, 160); /* Couleur de vos bordures */
+  border-radius: 4px;
+}
+
+/* Animation subtile pour les mises à jour */
+@keyframes subtleFlash {
+  0% { background-color: rgba(228, 240, 245, 0.8); }
+  100% { background-color: inherit; }
+}
+
+.updated-row {
+  animation: subtleFlash 1s ease-out;
+}
+
+/* Adaptation responsive */
+@media (max-width: 768px) {
+  #tabletable_bateau th,
+  #tabletable_bateau td {
+    padding: 10px 8px; /* Réduction sur mobile */
+    font-size: 0.75rem;
+  }
+}
+
+#filterMMSI{
+
+ margin: 12 px;
 }
