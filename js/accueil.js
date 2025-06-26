@@ -1,4 +1,3 @@
-
 ajaxRequest('GET', '../php/request.php?action=home', displayInfos);
 
 $('#Accueil').click(() => {
@@ -35,7 +34,6 @@ function displayInfos() {
     </div>
     
 
-
     <img src="../images/Bateau_1.jpeg" alt="logo" id="infos-image">
 
         <div class="carousel-container">
@@ -44,9 +42,9 @@ function displayInfos() {
         </div>
           <button class="carousel-btn prev">&#10094;</button>
           <div class="carousel">
-            <img src="../images/Bateau_2.jpg" class="carousel-img active" alt="Bateau 2"data-title="Navire cargo">
-            <img src="../images/Bateau_3.jpg" class="carousel-img" alt="Bateau 3"data-title="Pétrolier">
-            <img src="../images/Bateau_4.jpeg" class="carousel-img" alt="Bateau 4"data-title="Bateau de pêche">
+            <img src="../images/Bateau_2.jpg" class="carousel-img active" alt="Bateau 2"data-title="Navire cargo" data-url="https://fr.wikipedia.org/wiki/Navire_cargo">
+            <img src="../images/Bateau_3.jpg" class="carousel-img" alt="Bateau 3"data-title="Tanker" data-url="https://fr.wikipedia.org/wiki/P%C3%A9trolier">
+            <img src="../images/Bateau_4.jpeg" class="carousel-img" alt="Bateau 4"data-title="Bateau de plaisance" data-url="https://fr.wikipedia.org/wiki/Bateau_de_p%C3%AAche">
           </div>
           <button class="carousel-btn next">&#10095;</button>
         </div>
@@ -56,31 +54,47 @@ function displayInfos() {
 
 
 
+// Carrousel 
+let current = 0;
+const images = document.querySelectorAll(".carousel-img");
+const total = images.length;
+const titleElement = document.getElementById("carousel-title");
 
-  // Carrousel JS
-  let current = 0;
-  const images = document.querySelectorAll(".carousel-img");
-  const total = images.length;
-  const titleElement = document.getElementById("carousel-title");
-
-  function updateCarousel(index) {
-    images.forEach((img, i) => {
-      img.classList.toggle("active", i === index);
-    });
-    titleElement.textContent = images[index].dataset.title;
-    current = index;
-  }
-
-
-  document.querySelector(".prev").addEventListener("click", () => {
-    let newIndex = (current - 1 + total) % total;
-    updateCarousel(newIndex);
+function updateCarousel(index) {
+  images.forEach((img, i) => {
+    img.classList.toggle("active", i === index);
   });
-
-
-  document.querySelector(".next").addEventListener("click", () => {
-    let newIndex = (current + 1) % total;
-    updateCarousel(newIndex);
-  });
-   updateCarousel(0);
+  titleElement.textContent = images[index].dataset.title;
+  current = index;
 }
+
+document.querySelector(".prev").addEventListener("click", () => {
+  let newIndex = (current - 1 + total) % total;
+  updateCarousel(newIndex);
+});
+
+document.querySelector(".next").addEventListener("click", () => {
+  let newIndex = (current + 1) % total;
+  updateCarousel(newIndex);
+});
+
+// Redirection vers une page Wikipédia au clic
+images.forEach((img) => {
+  img.addEventListener("click", () => {
+    const url = img.dataset.url;
+    if (url) {
+      window.open(url, "_blank");
+    }
+  });
+});
+
+updateCarousel(0);
+}
+
+
+
+
+
+
+
+

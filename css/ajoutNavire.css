@@ -29,7 +29,8 @@ form {
 body.page-ajout-navire input.form-control,
 body.page-ajout-navire select.form-control,
 body.page-ajout-navire textarea.form-control {
-  background-color: #BED3C3 ; 
+  background-color:#d3d3d3;
+   /*#BED3C3 ;*/ 
 }
 
 #AjoutNavireForm_envoi h3.text-center {
