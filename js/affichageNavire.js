@@ -5,28 +5,28 @@ $("#AffichageNavire").click(() => {
 
 
 //fonction appelée après la réception des données des bateaux 
-function DisplayTablePage() {
-  clearPage(); //vider le contenu principal
-  ajaxRequest('GET', '../php/request.php?action=GetNavire', displayNavireTable)
+function DisplayTablePage(){
+    clearPage(); //vider le contenu principal
+    ajaxRequest('GET','../php/request.php?action=GetNavire',displayNavireTable)
 }
 
 
 function displayNavireTable(response) {
   let html = `
-  <div style="display: flex; align-items: center; gap: 10px;margin-top: 20px; flex-wrap: wrap;">
+  <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
   <input type="text" id="filterMMSI" placeholder="Entrez un MMSI..." class="form-control" style="max-width: 300px; flex-shrink: 0;">
   
   <label for="limitSelect" style="margin-bottom: 0; white-space: nowrap;">Nombre de bateaux :</label>
   
-  <select id="limitSelect" class="form-select" style="width: auto; max-width: 100px; flex-shrink: 0;">
-    <option value="10">10</option>
-    <option value="25" selected>25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-    <option value="500">500</option>
-    <option value="1000">1000</option>
-    <option value="10000">10000</option>
-  </select>
+  <input 
+    id="limitSelect" 
+    name="limit" 
+    type="text" 
+    class="form-control" 
+    style="width: 100px;" 
+    placeholder="Ex: 25 ou ALL" 
+    value="25" 
+/>
 
   <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
     <label style="margin-bottom: 0;">Aléatoire :</label>
@@ -44,8 +44,8 @@ function displayNavireTable(response) {
   
   <button id="filterBtn" class="btn btn-primary" style="flex-shrink: 0;">Filtrer</button>
 <div class="row">
-        <div class="col-md-12">
-            <h3 class="text-center mb-6"  >Liste des bateaux</h3>
+        <div class="col-md-6">
+            <h3>Liste des bateaux</h3>
             <div class="scroller">
     <table id="tabletable_bateau" class="container">
         <thead>
@@ -79,12 +79,9 @@ function displayNavireTable(response) {
             </div>
         </div>
         
-    </div>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h3 class="text-center mb-4">Carte des bateaux</h3>
-            <div id="mapDiv" style="height: 600px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
+        <div class="col-md-6">
+            <h3>Carte des bateaux</h3>
+            <div id="mapDiv" style="height: 600px; border: 1px solid #ddd; border-radius: 4px;"></div>
         </div>
     </div>
     
@@ -145,46 +142,60 @@ function displayNavireTableFiltered(response) {
             </td>
         </tr>`;
       tbody.append(row);
-
+    
     }
     plotAllBoatsOnMap(response);
-
+    
   }
+  
+    /*let button=`
+    <div class="d-flex justify-content-between my-3">
+      <button id="predictButton" class="btn btn-primary">Prédire Le Type</button>
+      <button id="positionButton" class="btn btn-primary">Prédire La Position</button>
+    </div>`;*/
 
-  /*let button=`
-  <div class="d-flex justify-content-between my-3">
-    <button id="predictButton" class="btn btn-primary">Prédire Le Type</button>
-    <button id="positionButton" class="btn btn-primary">Prédire La Position</button>
-  </div>`;*/
-
-  //$('#TableauNavire').append(button);
+    //$('#TableauNavire').append(button);
   $('#plotMapButton').click(() => {
-    let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
-    if (selectedIndex !== undefined) {
-      plotSelectedBoatOnMap(response, selectedIndex);
+        let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
+        if (selectedIndex !== undefined) {
+            plotSelectedBoatOnMap(response, selectedIndex);
+        } else {
+            plotAllBoatsOnMap(response);
+        }
+    });
+    $('#filterMMSI').on('input', function() {
+  const filter = $(this).val().trim();
+
+  $('#tabletable_bateau tbody tr').each(function() {
+    const mmsiCell = $(this).find('td').eq(0).text().trim();
+
+    // Si le MMSI commence par ce que l'utilisateur tape (ou si input vide, tout afficher)
+    if (mmsiCell.startsWith(filter) || filter === '') {
+      $(this).show();
     } else {
-      plotAllBoatsOnMap(response);
+      $(this).hide();
     }
   });
+});
 
   $('#predictButton').click(() => {
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
 
     if (selectedIndex !== undefined) {
       const data = {
-        mmsi: response[selectedIndex].mmsi,
-        Length: response[selectedIndex].longueur,
-        Width: response[selectedIndex].largeur,
-        Draft: response[selectedIndex].draft
-      };
-      console.log(data)
-      const queryString = new URLSearchParams(data).toString();
-      console.log(queryString)
+      mmsi: response[selectedIndex].mmsi,
+      Length: response[selectedIndex].longueur,
+      Width: response[selectedIndex].largeur,
+      Draft: response[selectedIndex].draft
+    };
+    console.log(data)
+    const queryString = new URLSearchParams(data).toString();
+    console.log(queryString)
 
 
-      ajaxRequest('POST', '../php/request.php?action=predictType', displayPredictPage, queryString);
+      ajaxRequest('POST', '../php/request.php?action=predictType',displayPredictPage,queryString);
 
-      //console.log(`Prédiction du type pour le navire MMSI: ${response[selectedIndex].mmsi}`);
+    //console.log(`Prédiction du type pour le navire MMSI: ${response[selectedIndex].mmsi}`);
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
@@ -201,28 +212,28 @@ function displayNavireTableFiltered(response) {
         return;
       }
       const data = {
-        mmsi: response[selectedIndex].mmsi,
-        date: response[selectedIndex].basedatetime,
-        length: response[selectedIndex].longueur,
-        width: response[selectedIndex].largeur,
-        draft: response[selectedIndex].draft,
-        latitude: response[selectedIndex].lat,
-        longitude: response[selectedIndex].lon,
-        sog: response[selectedIndex].sog,
-        cog: response[selectedIndex].cog,
-        heading: response[selectedIndex].heading,
-        time: time_v
-      };
+      mmsi: response[selectedIndex].mmsi,
+      date: response[selectedIndex].basedatetime,
+      length: response[selectedIndex].longueur,
+      width: response[selectedIndex].largeur,
+      draft: response[selectedIndex].draft,
+      latitude: response[selectedIndex].lat,
+      longitude: response[selectedIndex].lon,
+      sog: response[selectedIndex].sog,
+      cog: response[selectedIndex].cog,
+      heading: response[selectedIndex].heading,
+      time: time_v
+    };
       console.log(data);
       const query = new URLSearchParams(data).toString();
       console.log(query)
-
+    
       ajaxRequest('POST', `../php/request.php?action=predictposition`, displayPredictionPosition, query);
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
     }
   })
-  $('#clusterButton').click(() => {
+    $('#clusterButton').click(() => {
     if (!response || response.length === 0) {
       alert("Aucun navire disponible pour le clustering.");
       return;
@@ -241,86 +252,110 @@ function displayNavireTableFiltered(response) {
     data_j = JSON.stringify(clusterData);
 
     ajaxRequest('POST','../php/request.php?action=predictclusters',displayClusterResults,data_j);
-    ajaxRequest('POST', '../php/request.php?action=predictclusters', displayClusterResults, data_j);
   });
 
-
+    
 }
 
-function plotAllBoatsOnMap(response) {
-  if (response.length === 0) return;
 
-  let data = [{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function plotAllBoatsOnMap(response) {
+    if (response.length === 0) return;
+
+let data = [{
     type: "scattermapbox",
     lat: response.map(boat => boat.lat),
     lon: response.map(boat => boat.lon),
-    text: response.map(boat =>
-      `${boat.nom_bateau}<br>SOG: ${boat.sog} kn<br>COG: ${boat.cog}°`
+    text: response.map(boat => 
+        `${boat.nom_bateau}<br>SOG: ${boat.sog} kn<br>COG: ${boat.cog}°`
     ),
-    marker: {
-      color: response.map(() => getRandomColor()),
-      size: 8
+    marker: { 
+        color: response.map(() => getRandomColor()),
+        size: 8
     },
     hoverinfo: 'text',
     mode: 'markers'
-  }];
+}];
 
 
-  let layout = {
-    dragmode: "zoom",
-    mapbox: {
-      style: "open-street-map",
-      center: {
-        lat: 25,
-        lon: -90
-      },
-      zoom: 4.25
-    },
-    margin: { r: 0, t: 0, b: 0, l: 0 },
-    showlegend: false
-  };
+    let layout = {
+        dragmode: "zoom",
+        mapbox: {
+            style: "open-street-map",
+            center: {
+                lat: 25,
+                lon: -90
+            },
+            zoom: 4.25
+        },
+        margin: { r: 0, t: 0, b: 0, l: 0 },
+        showlegend: false
+    };
 
-  Plotly.newPlot("mapDiv", data, layout);
+    Plotly.newPlot("mapDiv", data, layout);
 }
 
 function plotSelectedBoatOnMap(response, index) {
-  let selectedRow = response[index];
+    let selectedRow = response[index];
+    
+    let data = [{
+        type: "scattermapbox",
+        lat: [selectedRow.lat],
+        lon: [selectedRow.lon],
+        text: [selectedRow.nom_bateau],
+        marker: { 
+            color: "red",
+            size: 3 
+        },
+        hoverinfo: 'text',
+        mode: 'markers'
+    }];
 
-  let data = [{
-    type: "scattermapbox",
-    lat: [selectedRow.lat],
-    lon: [selectedRow.lon],
-    text: [selectedRow.nom_bateau],
-    marker: {
-      color: "red",
-      size: 3
-    },
-    hoverinfo: 'text',
-    mode: 'markers'
-  }];
+    let layout = {
+        dragmode: "zoom",
+        mapbox: {
+            style: "open-street-map",
+            center: {
+                lat: selectedRow.lat,
+                lon: selectedRow.lon
+            },
+            zoom: 3
+        },
+        margin: { r: 0, t: 0, b: 0, l: 0 }
+    };
 
-  let layout = {
-    dragmode: "zoom",
-    mapbox: {
-      style: "open-street-map",
-      center: {
-        lat: selectedRow.lat,
-        lon: selectedRow.lon
-      },
-      zoom: 3
-    },
-    margin: { r: 0, t: 0, b: 0, l: 0 }
-  };
-
-  Plotly.newPlot("mapDiv", data, layout);
+    Plotly.newPlot("mapDiv", data, layout);
 }
 
 // Fonction utilitaire pour générer des couleurs aléatoires
 function getRandomColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }

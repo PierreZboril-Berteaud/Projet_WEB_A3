@@ -96,6 +96,7 @@ switch ($requestRessource) {
     case 'GetNavire':
         if($req==='GET'){
             $limit = $_GET['limit'];
+        
             $data=dbGetNavire($db,$limit);
 
         }
@@ -169,6 +170,22 @@ switch ($requestRessource) {
                 
             }
             $data = $results;
+        }
+        break;
+    case 'getNavireInfo':
+        if ($req === 'GET') {
+            $data='ok';
+            $data=dbGetLWD($db, $_GET['mmsi']);
+        }
+        break;
+    case 'putHSC0':
+        if ($req === 'GET') {
+            $data = "Ok";
+            header('HTTP/1.1 200 OK');
+        } else {
+            header('HTTP/1.1 405 Method Not Allowed');
+            echo json_encode(['error' => 'Méthode non autorisée']);
+            exit;
         }
         break;
     default:

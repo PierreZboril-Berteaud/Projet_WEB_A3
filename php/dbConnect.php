@@ -212,4 +212,27 @@
         return $result;
         
     }
+    function dbGetLength($db){
+        try {
+            $query = "SELECT COUNT(*) FROM historique";
+            $stmt = $db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Request error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    function dbGetLWD($db, $MMSI){
+        try {
+            $query = "SELECT longueur, largeur, draft FROM Bateau WHERE MMSI = :MMSI";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':MMSI', $MMSI, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Request error: ' . $e->getMessage());
+            return false;
+        }
+    }
 ?>

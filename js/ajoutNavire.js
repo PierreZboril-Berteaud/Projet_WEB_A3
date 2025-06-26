@@ -106,9 +106,30 @@ function displayAjoutNavire() {
         <button type="submit" class="btn btn-primary">Ajouter Le Navire</button>
       </div>
     </form>
+
+    
   `;
 
   $("#AjoutNavireForm").html(html);
+
+  $('#MMSI').on('blur', function() {
+  const mmsi = $(this).val().trim();
+  
+  if (mmsi.length === 9) { // tu peux vérifier ici la validité du MMSI
+    // Appel AJAX pour récupérer les infos
+    ajaxRequest('GET', `../php/request.php?action=getNavireInfo&mmsi=${mmsi}`, fillNavireFields);
+  }
+  });
+  $('#SOG').on('blur',function(){
+    ajaxRequest('GET', `../php/request.php?action=putHSC0`, SogCogHeadingZero);
+  })
+  $('#COG').on('blur',function(){
+    ajaxRequest('GET', `../php/request.php?action=putHSC0`, SogCogHeadingZero);
+  })
+  $('#Heading').on('blur',function(){
+    ajaxRequest('GET', `../php/request.php?action=putHSC0`, SogCogHeadingZero);
+  })
+
 
   $('#AjoutNavireForm_envoi').submit((event) => {
     event.preventDefault();
@@ -136,6 +157,23 @@ function displayAjoutNavire() {
   });
 }
 
+function fillNavireFields(response) {
+  console.log(response);
+  if (response && response.longueur) {
+    $('#Longueur').val(response.longueur);
+    $('#Largeur').val(response.largeur);
+    $('#TirantEau').val(response.draft);
+  } else {
+    $('#Longueur').val('');
+    $('#Largeur').val('');
+    $('#TirantEau').val('');
+  }
+}
+function SogCogHeadingZero(){
+  $('#SOG').val(0);
+  $('#COG').val(0);
+  $('#Heading').val(0);
+}
 function addNavireResponse(response) {
   if (response) {
     alert("Navire ajouté avec succès !");
