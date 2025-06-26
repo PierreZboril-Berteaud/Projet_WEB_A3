@@ -78,55 +78,58 @@ function minsec(data){
 
 function displayClusterResults(response) {
   clearPage();
-  console.log(response);
-
-  // Création de la carte centrée sur le Golfe du Mexique
-  const map = L.map('map').setView([25, -90], 5);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  // Fonction pour générer une couleur aléatoire (unique par cluster)
-  const getRandomColor = () => {
-    return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-  };
-
-  const clusterColors = {}; // Stocke une couleur par cluster
-
-  response.forEach((item, index) => {
-    const lat = parseFloat(item.latitude);
-    const lon = parseFloat(item.longitude);
-    const clusterId = parseInt(item.cluster[0], 10); // ['2'] → 2
-
-    if (!clusterColors.hasOwnProperty(clusterId)) {
-      clusterColors[clusterId] = getRandomColor();
-    }
-
-    const marker = L.circleMarker([lat, lon], {
-      radius: 6,
-      fillColor: clusterColors[clusterId],
-      color: clusterColors[clusterId],
-      weight: 1,
-      opacity: 1,
-      fillOpacity: 0.7
-    });
-
-    marker.bindPopup(`Cluster : ${clusterId}`);
-    marker.addTo(map);
-  });
-
-  // Affichage texte si nécessaire
   let html = `
-    <div id="card-prediction" class="card shadow-sm border-primary mb-4" style="max-width: 700px; margin: auto;">
-      <div class="card-header bg-primary text-white">
-        <h2 class="h5 mb-0">Prédiction des différents Clusters</h2>
-      </div>
-      <div class="card-body">
-        ${Object.entries(clusterColors).map(([id, color]) => `
-          <div><strong style="color: ${color};">Cluster ${id}</strong></div>
-        `).join('')}
-      </div>
-    </div>`;
+      <div id="card-prediction" class="card shadow-sm border-primary mb-4"style="max-width: 700px; max-height:1000px;margin: auto; padding-bottom: 60px;">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">Prédiction des clusters</h2>
+    </div>
+      <div id="map2" style="height: 400px; width: 100%; margin-top: 15px;"></div>
+  </div>
 
-  $('#prediction').html(html); // Ou un autre conteneur pour afficher la légende
+    `;
+  $("#prediction").html(html);
+  setTimeout(() => {
+    const map2 = L.map('map2').setView([25, -90], 5); // Golfe du Mexique
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map2);
+
+    response.forEach((boat, i) => {
+      const clusterId = parseInt(boat.cluster[0], 10);
+      const lat = parseFloat(boat.latitude);
+      const lon = parseFloat(boat.longitude);
+
+      const color = getColorForCluster(clusterId);
+      const marker = L.circleMarker([lat, lon], {
+        radius: 8,
+        color: color,
+        fillColor: color,
+        fillOpacity: 0.8
+      });
+
+      marker.bindPopup(`MMSI: ${boat.mmsi}<br>Cluster: ${clusterId}`);
+      marker.addTo(map2);
+    });
+  }, 50); // 50–100ms suffisent
+}
+
+
+
+function getColorForCluster(clusterId) {
+  const colors = [
+    "#1f77b4", // bleu
+    "#ff7f0e", // orange
+    "#2ca02c", // vert
+    "#d62728", // rouge
+    "#9467bd", // violet
+    "#8c564b", // brun
+    "#e377c2", // rose
+    "#7f7f7f", // gris
+    "#bcbd22", // olive
+    "#17becf"  // turquoise
+  ];
+
+  // Retourne une couleur en fonction du clusterId, même si clusterId dépasse la taille du tableau
+  return colors[clusterId % colors.length];
 }

@@ -10,6 +10,11 @@ function clearPage(){
   $("#AjoutNavireForm").html('');
   $('#TableauNavire').html('');
   $('#prediction').html('');
+  $('#map').html('');
+  var div = document.getElementById('map2');
+  if (div) {
+      div.remove();
+  }
 }
 
 function displayInfos() {

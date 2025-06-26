@@ -27,6 +27,20 @@ function displayNavireTable(response) {
     <option value="1000">1000</option>
     <option value="10000">10000</option>
   </select>
+
+  <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+    <label style="margin-bottom: 0;">Aléatoire :</label>
+    <div>
+      <input type="radio" id="randomYes" name="randomSelect" value="yes">
+      <label for="randomYes">Oui</label>
+    </div>
+    <div>
+      <input type="radio" id="randomNo" name="randomSelect" value="no" checked>
+      <label for="randomNo">Non</label>
+    </div>
+  </div>
+
+  
   
   <button id="filterBtn" class="btn btn-primary" style="flex-shrink: 0;">Filtrer</button>
 <div class="row">
@@ -72,6 +86,26 @@ function displayNavireTable(response) {
             <div id="mapDiv" style="height: 600px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
         </div>
     </div>
+    
+          `; 
+    $('#TableauNavire').html(html);
+    $('#filterBtn').on('click', function() {
+      
+      let mmsiValue = $('#filterMMSI').val().trim();      // Récupère la valeur du input MMSI
+      const limitValue = $('#limitSelect').val();          // Récupère la valeur sélectionnée dans le select
+      const isRandom = $('input[name="randomSelect"]:checked').val(); // "yes" ou "no"
+
+      if(!mmsiValue) {
+        mmsiValue = '1'
+      }
+      if (isRandom === 'no') {
+      ajaxRequest('GET', `../php/request.php?action=GetNavire&limit=${limitValue}&mmsi=${mmsiValue}`, displayNavireTableFiltered);
+      }
+      else{
+        ajaxRequest('GET', `../php/request.php?action=GetNavireRd&limit=${limitValue}&mmsi=${mmsiValue}`, displayNavireTableFiltered);
+      }
+    });
+  }
 </div>
     </div>
           `;
@@ -208,6 +242,8 @@ function displayNavireTableFiltered(response) {
     console.log(clusterData)
     // Envoyer la requête AJAX pour demander le clustering
     data_j = JSON.stringify(clusterData);
+
+    ajaxRequest('POST','../php/request.php?action=predictclusters',displayClusterResults,data_j);
     ajaxRequest('POST', '../php/request.php?action=predictclusters', displayClusterResults, data_j);
   });
 

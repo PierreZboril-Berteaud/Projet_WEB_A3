@@ -100,6 +100,12 @@ switch ($requestRessource) {
 
         }
         break;
+    case 'GetNavireRd':
+        if($req==='GET'){
+            $limit = $_GET['limit'];
+            $data=dbGetNavireRd($db,$limit);
+        }
+        break;
     case 'predictType':
         
         if($req==='POST'){
