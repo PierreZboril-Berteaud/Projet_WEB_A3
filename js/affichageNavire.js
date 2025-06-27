@@ -43,10 +43,10 @@ function displayNavireTable(response) {
     </div>
   </div>
 
-  <button id="filterBtn" class="btn btn-primary" style="flex-shrink: 0;">Filtrer</button>
+  <button id="filterBtn" class="my-btn-primary" style="flex-shrink: 0;">Filtrer</button>
 <div class="row">
         <div class="col-md-12">
-            <h3 style="text-align: center;">Liste des bateaux</h3>
+            <h3 style="color:#0077be; text-align: center;">Liste des bateaux</h3>
             <div class="scroller">
     <table id="tabletable_bateau" class="table table-striped table-bordered">
         <thead>
@@ -78,17 +78,17 @@ function displayNavireTable(response) {
 
             <div style="display: flex; gap: 10px; margin: 1rem 0;">
               
-              <button id="plotMapButton" class="btn btn-success">Afficher sur la carte</button>
-              <button id="predictButton" class="btn btn-primary">Prédire Le Type</button>
-              <button id="positionButton" class="btn btn-primary">Prédire La Position</button>
-              <button id="clusterButton" class="btn btn-primary">Prédire Les clusters</button>
+              <button id="plotMapButton" class="my-btn-success">Afficher sur la carte</button>
+              <button id="predictButton" class="my-btn-primary">Prédire Le Type</button>
+              <button id="positionButton" class="my-btn-primary">Prédire La Position</button>
+              <button id="clusterButton" class="my-btn-primary">Prédire Les clusters</button>
             </div>
         </div>
         
         
     </div>
     <div class="col-md-6">
-            <h3 style="text-align: center;">Carte des bateaux</h3>
+            <h3 style="color:#0077be; text-align: center;">Carte des bateaux</h3>
             <div id="mapDiv" style="height: 600px; border: 1px solid #ddd;margin: 0 auto;text-align: center; border-radius: 4px;"></div>
         </div>
     
@@ -243,6 +243,11 @@ function renderTablePage() {
   });
 }
 
+
+
+
+
+
 function renderPagination() {
   const totalPages = Math.ceil(navireData.length / rowsPerPage);
   const pagination = $('#pagination');
@@ -303,6 +308,13 @@ function renderPagination() {
     }
   });
 }
+
+
+
+
+
+
+
 
 
 function plotAllBoatsOnMap(response) {

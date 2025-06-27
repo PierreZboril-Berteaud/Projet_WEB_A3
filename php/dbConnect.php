@@ -235,4 +235,16 @@
             return false;
         }
     }
+    function dbDeleteNavire($db, $MMSI) {
+    try {
+        $stmt = $db->prepare("DELETE FROM Bateau WHERE MMSI = :mmsi");
+        $stmt->bindParam(':mmsi', $MMSI, PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        error_log("Erreur suppression navire : " . $e->getMessage());
+        return false;
+    }
+}
+
 ?>
