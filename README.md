@@ -78,6 +78,22 @@ Ces scripts interagissent avec une base de données centralisée et sont appelé
 4. Naviguer entre les différentes pages pour gérer et analyser les navires.
 
 ---
+## 📦 Dépendances
+
+* `pandas`
+* `matplotlib`
+* `scikit-learn`
+* `pickle`
+* `argparse`
+* psycopg2
+
+Installe-les avec :
+
+```bash
+pip install pandas matplotlib scikit-learn psycopg2 
+```
+
+
 ## ⚠️ Attention 
 1. Les fonctions de prédiction peuvent mettre beaucoup de temps à s'executer, car les prédictions sont faites une par une (surtout dans le cas du clustering)
 2. Les fonctions prédiction de type ainsi que prédiction de trajectoire mettent en moyenne 5 à 10 secondes à s'éxecuter
