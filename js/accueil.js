@@ -33,9 +33,8 @@ function displayInfos() {
       </div>
     </div>
     
-
+    <div>
     <img src="../images/Bateau_1.jpeg" alt="logo" id="infos-image">
-
         <div class="carousel-container">
           <div id="carousel-title" style="text-align:center; font-weight:700; margin-bottom: 8px; color:#12769E; font-size:1.2rem;">
             Navire cargo
@@ -48,6 +47,8 @@ function displayInfos() {
           </div>
           <button class="carousel-btn next">&#10095;</button>
         </div>
+                </div>
+
       `;
 
       $('#infos').html(html);
