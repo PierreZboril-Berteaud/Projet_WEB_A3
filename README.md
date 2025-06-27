@@ -73,7 +73,10 @@ Ces scripts interagissent avec une base de données centralisée et sont appelé
 4. Naviguer entre les différentes pages pour gérer et analyser les navires.
 
 ---
-
+## ⚠️ Attention 
+1. Les fonctions de prédiction peuvent mettre beaucoup de temps à s'executer, car les prédictions sont faites une par une (surtout dans le cas du clustering)
+2. Les fonctions prédiction de type ainsi que prédiction de trajectoire mettent en moyenne 5 à 10 secondes à s'éxecuter
+3. Le temps d'éxecution de la fonction prédiction de cluster peut être très long selon le nombre de données mise en entrée
 ## 👥 Auteurs
 
 Projet réalisé par :
