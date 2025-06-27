@@ -46,7 +46,7 @@
 
 /* Amélioration du survol */
 #tabletable_bateau tr:hover td {
-  background-color: rgba(228, 240, 245, 0.5); /* Variante légère de votre bleu */
+  background-color: rgba(228, 240, 245, 0.5);
 }
 
 /* Conteneur avec défilement amélioré */
@@ -58,7 +58,6 @@
   border-radius: 4px;
 }
 
-/* Barre de défilement stylisée (discrete) */
 .scroller::-webkit-scrollbar {
   width: 8px;
 }
@@ -76,54 +75,3 @@
 .updated-row {
   animation: subtleFlash 1s ease-out;
 }
-
-
-
-.my-btn-primary {
-    all: unset;
-    display: inline-block;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem; 
-    margin: 0.5rem 0;
-    padding: 0.5rem 1rem;
-    border-left: 4px solid #004c73; 
-    background: rgb(18, 118, 158); 
-    box-shadow: none; 
-    border-radius: 0; 
-    text-align: left;
-    letter-spacing: 0.5px;
-    transition: background-color 0.3s ease; 
-    cursor: pointer;
-}
-
-.my-btn-primary:hover {
-    background: rgb(13, 100, 135); 
-    cursor: pointer;
-}
-
-
-
-.my-btn-success {
-    all: unset;
-    display: inline-block;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem; 
-    margin: 0.5rem 0;
-    padding: 0.5rem 1rem;
-    background: #BED3C3; 
-    box-shadow: none; 
-    border-radius: 0; 
-    text-align: left;
-    letter-spacing: 0.5px;
-    transition: background-color 0.3s ease; 
-    cursor: pointer;
-    outline: none;
-}
-
-.my-btn-success:hover {
-    background: #5E8D6B; 
-    cursor: pointer;
-}
-

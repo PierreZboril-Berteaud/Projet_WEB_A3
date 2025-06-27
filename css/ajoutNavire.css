@@ -1,20 +1,22 @@
+/* ===== Arrière-plan spécifique à la page "ajout navire" ===== */
 body.page-ajout-navire {
     background-image: url('../images/Bateau_5.jpg');
     background-position: center;
     background-attachment: fixed;
-    background-size: cover;        
-    background-repeat: no-repeat;   
-    background-color: #000;         
-    min-height: 100vh;             
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #000;
+    min-height: 100vh;
 }
 
 
+/* ===== Arrière-plan par défaut ===== */
 body {
-    background-image: none;
     background-color: #fff; 
 }
 
 
+/* ===== Formulaire ===== */
 form {
       background: white;
       padding: 20px 20px;
@@ -26,6 +28,8 @@ form {
     }
 
 
+/* Champs du formulaire dans la page "ajout navire" */
+
 body.page-ajout-navire input.form-control,
 body.page-ajout-navire select.form-control,
 body.page-ajout-navire textarea.form-control {
@@ -33,6 +37,7 @@ body.page-ajout-navire textarea.form-control {
    /*#BED3C3 ;*/ 
 }
 
+/* Titre du formulaire */
 #AjoutNavireForm_envoi h3.text-center {
     text-transform: uppercase;
     text-align: center;
@@ -45,46 +50,7 @@ body.page-ajout-navire textarea.form-control {
     margin: 20px 0;
 }
 
-
-#bateauxTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 18px;
-    text-align: left;
-}
-
-#bateauxTable th {
-    background-color: #007BFF;
-    color: white;
-    font-weight: bold;
-}
-
-#bateauxTable th, #bateauxTable td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-#bateauxTable tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-#bateauxTable tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-#bateauxTable tbody tr:last-of-type {
-    border-bottom: 2px solid #007BFF;
-}
-
-#bateauxTable tbody tr:hover {
-    background-color: #e9e9e9;
-}
-
-
-
-
-
+/* ===== Boutons personnalisés ===== */
 .my-btn-primary {
     all: unset;
     display: inline-block;
