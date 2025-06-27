@@ -55,11 +55,9 @@ function displayPredictionPosition(response) {
 
     L.marker([lat, lon]).addTo(map)
         .bindPopup('Position prédite')
-        .openPopup();
 
     L.marker([lat_r, lon_r]).addTo(map)
         .bindPopup('Position avant prédiction')
-        .openPopup();
         
 }
 
