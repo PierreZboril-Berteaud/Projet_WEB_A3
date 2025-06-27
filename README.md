@@ -47,8 +47,13 @@ Ces prédictions sont réalisées à l’aide de modèles de machine learning (e
 L'application repose sur un ensemble de scripts Python appelés automatiquement pour :
 
 - Prédire les clusters(`main_fonc_1.py`)
-- Prédire les types de navires (`main_fonc_2`)
-- Prédire les trajectoires(`main_fonc_3`)
+- Prédire les types de navires (`main_fonc_2.py`)
+- Prédire les trajectoires(`main_fonc_3.py`)
+
+```bash
+#Commande à utiliser appeller le script python d'ajout à la base de donnée
+python3 python/script_insert_bdd.py
+```
 
 Ces scripts interagissent avec une base de données centralisée et sont appelés par l’interface web via des requêtes asynchrones (AJAX/API).
 
