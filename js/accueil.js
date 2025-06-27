@@ -33,21 +33,19 @@ function displayInfos() {
       </div>
     </div>
     
-    <div>
-    <img src="../images/Bateau_1.jpeg" alt="logo" id="infos-image">
-        <div class="carousel-container">
-          <div id="carousel-title" style="text-align:center; font-weight:700; margin-bottom: 8px; color:#12769E; font-size:1.2rem;">
-            Navire cargo
+    <div id="media-container">
+      <img src="../images/Bateau_1.jpeg" alt="logo" id="infos-image">
+      <div class="carousel-container">
+        <div id="carousel-title">Navire cargo</div>
+        <button class="carousel-btn prev">&#10094;</button>
+        <div class="carousel">
+          <img src="../images/Bateau_2.jpg" class="carousel-img active" alt="Bateau 2" data-title="Navire cargo" data-url="https://fr.wikipedia.org/wiki/Navire_cargo">
+          <img src="../images/Bateau_3.jpg" class="carousel-img" alt="Bateau 3" data-title="Tanker" data-url="https://fr.wikipedia.org/wiki/P%C3%A9trolier">
+          <img src="../images/Bateau_4.jpeg" class="carousel-img" alt="Bateau 4" data-title="Bateau de plaisance" data-url="https://fr.wikipedia.org/wiki/Bateau_de_p%C3%AAche">
         </div>
-          <button class="carousel-btn prev">&#10094;</button>
-          <div class="carousel">
-            <img src="../images/Bateau_2.jpg" class="carousel-img active" alt="Bateau 2"data-title="Navire cargo" data-url="https://fr.wikipedia.org/wiki/Navire_cargo">
-            <img src="../images/Bateau_3.jpg" class="carousel-img" alt="Bateau 3"data-title="Tanker" data-url="https://fr.wikipedia.org/wiki/P%C3%A9trolier">
-            <img src="../images/Bateau_4.jpeg" class="carousel-img" alt="Bateau 4"data-title="Bateau de plaisance" data-url="https://fr.wikipedia.org/wiki/Bateau_de_p%C3%AAche">
-          </div>
-          <button class="carousel-btn next">&#10095;</button>
-        </div>
-                </div>
+        <button class="carousel-btn next">&#10095;</button>
+      </div>
+    </div>
 
       `;
 
