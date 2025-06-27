@@ -126,13 +126,6 @@ function displayAjoutNavire() {
   $('#SOG').on('blur',function(){
     ajaxRequest('GET', `../php/request.php?action=putHSC0`, SogCogHeadingZero);
   })
-  $('#COG').on('blur',function(){
-    ajaxRequest('GET', `../php/request.php?action=putHSC0`, SogCogHeadingZero);
-  })
-  $('#Heading').on('blur',function(){
-    ajaxRequest('GET', `../php/request.php?action=putHSC0`, SogCogHeadingZero);
-  })
-
 
   $('#AjoutNavireForm_envoi').submit((event) => {
     event.preventDefault();
@@ -196,12 +189,15 @@ function fillNavireFields(response) {
   }
 }
 function SogCogHeadingZero(){
-  $('#SOG').val(0);
-  $('#COG').val(0);
-  $('#Heading').val(0);
+  if($('#SOG').val() ==0){
+    $('#SOG').val(0);
+    $('#COG').val(0);
+    $('#Heading').val(0);
+  }  
 }
 function addNavireResponse(response) {
-  if (response) {
+  console.log(response);
+  if (response==true) {
     alert("Navire ajouté avec succès !");
     ajaxRequest('GET', '../php/request.php?action=home', displayAjoutNavire); // appel d’une vraie fonction page d’accueil
   } else {
