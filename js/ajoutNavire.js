@@ -203,7 +203,7 @@ function SogCogHeadingZero(){
 function addNavireResponse(response) {
   if (response) {
     alert("Navire ajouté avec succès !");
-    ajaxRequest('GET', '../php/request.php?action=home', displayHomePage); // appel d’une vraie fonction page d’accueil
+    ajaxRequest('GET', '../php/request.php?action=home', displayAjoutNavire); // appel d’une vraie fonction page d’accueil
   } else {
     alert("Erreur lors de l'ajout du navire : ");
   }
