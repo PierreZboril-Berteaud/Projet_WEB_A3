@@ -103,8 +103,8 @@ function displayAjoutNavire() {
       </div>
 
       <div class="text-center">
-        <button type="submit" class="btn btn-primary">Ajouter Le Navire</button>
-        <button type="button" id="SupprimerNavire" class="btn btn-danger">Supprimer Le Navire</button>
+        <button type="submit" class="my-btn-primary">Ajouter Le Navire</button>
+        <button type="button" id="SupprimerNavire" class="my-btn-danger">Supprimer Le Navire</button>
       </div>
     </form>
 
