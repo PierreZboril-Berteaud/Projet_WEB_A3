@@ -15,6 +15,7 @@ function DisplayTablePage(){
 }
 
 function displayNavireTable(response) {
+  // Fonction pour afficher le tableau des navires
   let html = `
   <div style="display: flex; align-items: center; gap: 10px;  margin-top: 10px; flex-wrap: wrap;">
   <input type="text" id="filterMMSI" placeholder="Entrez un MMSI..." class="form-control" style="max-width: 300px; flex-shrink: 0;">
@@ -123,6 +124,7 @@ function displayNavireTableFiltered(response) {
 }
 
 function renderTablePage() {
+  // Fonction pour afficher une page du tableau des navires
   let tbody = $('#tabletable_bateau tbody');
   tbody.empty();
 
@@ -158,6 +160,7 @@ function renderTablePage() {
     const filter = $(this).val().trim();
 
     $('#tabletable_bateau tbody tr').each(function() {
+  
       const mmsiCell = $(this).find('td').eq(0).text().trim();
 
       if (mmsiCell.startsWith(filter) || filter === '') {
@@ -180,8 +183,10 @@ function renderTablePage() {
   });
 
   $('#predictButton').off('click').click(() => {
+    // Fonction pour prédire le type de navire après avoir sélectionné un navire dans le tableau
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
     if (selectedIndex !== undefined) {
+      //récupération des données du navire sélectionné
       const data = {
         mmsi: navireData[selectedIndex].mmsi,
         Length: navireData[selectedIndex].longueur,
@@ -196,6 +201,7 @@ function renderTablePage() {
   });
 
   $('#positionButton').off('click').click(() => {
+    // Fonction pour prédire la position d'un navire après avoir sélectionné un navire dans le tableau
     let selectedIndex = $("input[name='Prediction-Type-Navire']:checked").data('index');
     if (selectedIndex !== undefined) {
       let timeInput = prompt("Entrez le temps (en secondes) pour la prédiction de position :");
@@ -205,6 +211,8 @@ function renderTablePage() {
         return;
       }
       const boat = navireData[selectedIndex];
+      //récupération des données du navire sélectionné
+      // et envoi de la requête AJAX pour prédire la position
       const data = {
         mmsi: boat.mmsi,
         date: boat.basedatetime,
@@ -222,7 +230,7 @@ function renderTablePage() {
       ajaxRequest('POST', `../php/request.php?action=predictposition`, displayPredictionPosition, query);
     } else {
       alert("Veuillez sélectionner un navire pour la prédiction.");
-    }
+    } 
   });
 
   $('#clusterButton').off('click').click(() => {
@@ -249,6 +257,7 @@ function renderTablePage() {
 
 
 function renderPagination() {
+  //Fonction pour diviser le tableau en plusieurs pages
   const totalPages = Math.ceil(navireData.length / rowsPerPage);
   const pagination = $('#pagination');
   pagination.empty();
@@ -318,6 +327,7 @@ function renderPagination() {
 
 
 function plotAllBoatsOnMap(response) {
+  //Affichage des navires sur la carte
   if (response.length === 0) return;
 
   let data = [{

@@ -1,8 +1,6 @@
 function displayPredictPage(response) {
+    // Fonction pour afficher la page de prédiction du type de navire
     clearPage();
-
-
-
     let html = `
       <div class="card shadow-sm border-primary mb-4">
     <div class="card-header bg-primary text-white">
@@ -18,10 +16,9 @@ function displayPredictPage(response) {
 
 
 function displayPredictionPosition(response) {
+    // Fonction pour afficher la page de prédiction de la position du navire
     clearPage();
     console.log(response);
-           
-
     let html = `
       <div id="card-prediction" class="card shadow-sm border-primary mb-4"style="max-width: 700px; max-height:1000px;margin: auto; padding-bottom: 60px;">
     <div class="card-header bg-primary text-white">
@@ -41,12 +38,12 @@ function displayPredictionPosition(response) {
     `;
 
     $("#prediction").html(html);
+
+    // Initialisation de la carte et des variables avec Leaflet
     const lat = parseFloat(response[0]);
     const lon = parseFloat(response[1]);
-
     const lat_r = parseFloat(response[4]);
     const lon_r = parseFloat(response[5]);
-
     const map = L.map('map').setView([lat, lon], 6);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -62,6 +59,7 @@ function displayPredictionPosition(response) {
 }
 
 function minsec(data){
+  // Fonction pour convertir les secondes en minutes et heures
   if(data>60 && data <3600){
     return `${(data/60).toFixed(2)} minutes`
   }
@@ -75,6 +73,7 @@ function minsec(data){
 
 
 function displayClusterResults(response) {
+  // Fonction pour afficher les résultats de la prédiction des clusters
   clearPage();
   let html = `
       <div id="card-prediction" class="card shadow-sm border-primary mb-4"style="max-width: 700px; max-height:1000px;margin: auto; padding-bottom: 60px;">
@@ -92,7 +91,8 @@ function displayClusterResults(response) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map2);
-
+    //Pour chaque bateau, on crée un cercle avec la couleur du cluster
+    // et on l'ajoute à la carte
     response.forEach((boat, i) => {
       const clusterId = parseInt(boat.cluster[0], 10);
       const lat = parseFloat(boat.latitude);
@@ -115,6 +115,7 @@ function displayClusterResults(response) {
 
 
 function getColorForCluster(clusterId) {
+  // Tableau de couleurs pour les clusters
   const colors = [
     "#1f77b4", // bleu
     "#ff7f0e", // orange

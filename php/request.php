@@ -29,6 +29,7 @@ header('Content-Type: application/json');
 switch ($requestRessource) {
 
     case 'home':
+        // Page d'accueil
         if ($req === 'GET') {
             $data = ['message' => 'Page d\'accueil', 'content' => 'home'];
             header('HTTP/1.1 200 OK');
@@ -40,6 +41,7 @@ switch ($requestRessource) {
         break;
 
     case 'ajoutNavire':
+        //Page d'ajout de navire
         if ($req === 'GET') {
             $data = ['message' => 'Formulaire ajout navire', 'content' => 'ajoutNavire'];
             header('HTTP/1.1 200 OK');
@@ -51,11 +53,12 @@ switch ($requestRessource) {
         break;
 
     case 'ajoutNavireBdd':
+        //Fonction d'ajout de navire dans la base de données
         if ($req==='POST'){
 
             $MMSI = htmlspecialchars($_POST['MMSI']);
             $date = htmlspecialchars($_POST['date']);
-
+            //Encodage de la date
             $dateTime = DateTime::createFromFormat('Y-m-d\TH:i:s', $date);
             $formattedDate = $dateTime->format('Y-m-d H:i:s');
 
@@ -84,6 +87,7 @@ switch ($requestRessource) {
         }
         break;
     case 'AfficheTableau':
+        //Page d'affichage du tableau des navires
         if ($req === 'GET') {
             $data = "Page Affiche Tableau";
             header('HTTP/1.1 200 OK');
@@ -94,6 +98,7 @@ switch ($requestRessource) {
         }
         break;
     case 'GetNavire':
+        //Récuparation d'un nombre de navires avec une limite
         if($req==='GET'){
             $limit = $_GET['limit'];
         
@@ -102,13 +107,14 @@ switch ($requestRessource) {
         }
         break;
     case 'GetNavireRd':
+        //Recuprération aléatoire de navires avec une limite
         if($req==='GET'){
             $limit = $_GET['limit'];
             $data=dbGetNavireRd($db,$limit);
         }
         break;
     case 'predictType':
-        
+        //Appel de la fonction de prédiction du type de navire
         if($req==='POST'){
 
             $MMSI = htmlspecialchars($_POST['mmsi']);
@@ -121,6 +127,7 @@ switch ($requestRessource) {
         }
         break;
     case 'predictposition':
+        // Appel de la fonction de prédiction de la position du navire
         if($req==='POST'){
             
             $MMSI = htmlspecialchars($_POST['mmsi']);
@@ -147,6 +154,7 @@ switch ($requestRessource) {
         }
         break;
     case 'predictclusters':
+        // Appel de la fonction de prédiction des clusters de navires
         if($req==='POST'){
             $jsonData = file_get_contents("php://input");
             $navires = json_decode($jsonData, true);
@@ -173,12 +181,14 @@ switch ($requestRessource) {
         }
         break;
     case 'getNavireInfo':
+        // Récupération des informations d'un navire (Length/Width/Draft)
         if ($req === 'GET') {
             $data='ok';
             $data=dbGetLWD($db, $_GET['mmsi']);
         }
         break;
     case 'putHSC0':
+        //Fonction pour mettre le Heading et le Cog à 0 dans le formulaire d'ajout de navire
         if ($req === 'GET') {
             $data = "Ok";
             header('HTTP/1.1 200 OK');
@@ -189,13 +199,9 @@ switch ($requestRessource) {
         }
         break;
     case 'supprimerNavireBdd':
+        //suppression d'un navire de la base de données à partir de son MMSI
         if($req==='POST'){
-            
             $MMSI = htmlspecialchars($_POST['MMSI']);
-
-
-            
-
             $data = dbDeleteNavire($db, $MMSI);
             if($data != true){
                 header('HTTP/1.1 401 Unauthorized');

@@ -2,6 +2,8 @@
     include "constants.php";
 
         function dbConnect(){
+            // Connexion à la base de données PostgreSQL
+            // Utilisation des constantes définies dans constants.php
             try {
                 $dsn = "pgsql:host=" . dbserver . ";port=" . dbport . ";dbname=" . dbname . ";user=" . dbuser . ";password=" . db_pwd;
                 $conn = new PDO($dsn, dbuser, db_pwd);
@@ -16,6 +18,7 @@
         
         function dbAddNavire($db, $MMSI, $date, $latitude, $longitude, $SOG, $COG, $Heading, $Nom, $Etat, $Longueur, $Largeur, $Draft,$VesselType, $Cargo)
         {
+        //Ajout d'un navire dans la base de données
         try {
             $db->beginTransaction();
             $queryCheck = "SELECT MMSI FROM Bateau WHERE MMSI = :MMSI";
@@ -72,6 +75,7 @@
     }
 
     function dbGetNavire($db,$limit){
+        // Récupération des navires avec leurs positions et historiques
         try {
             $query = "SELECT 
                     b.mmsi, 
@@ -105,6 +109,7 @@
         }
     }
     function dbGetNavireRd($db,$limit){
+        // Récupération des navires avec leurs positions et historiques, ordre aléatoire
          try {
             $query = "SELECT 
                     b.mmsi, 
@@ -142,6 +147,7 @@
 
 
     function dbGetTypePrediction($Longueur,$Largeur,$Draft){
+        // Fonction pour prédire le type de navire en utilisant un modèle déjà entraîné
         $result=[];
         $command = "python3 ../python/main_fonc_2.py --Predict True --Model RandomForest --Length $Longueur --Width $Largeur --Draft $Draft";
         #escapeshellcmd("python3 ../python/main_fonc_2.py --Predict True --Model RandomForest --Length $Longueur --Width $Largeur --Draft $Draft") . " 2>&1" //Pour tester erreurs
@@ -155,6 +161,7 @@
         return $result;   
     }
     function dbGetCargo($db, $MMSI){
+        // Récupération du type de cargaison d'un navire à partir de son MMSI
         try {
             $query = "SELECT cargo FROM Bateau WHERE MMSI = :MMSI";
             $stmt = $db->prepare($query);
@@ -167,6 +174,7 @@
         }
     }
     function dbGetVesselType($db, $MMSI){
+        // Récupération du type de navire à partir de son MMSI
         try {
             $query = "SELECT vesseltype FROM Bateau WHERE MMSI = :MMSI";
             $stmt = $db->prepare($query);
@@ -179,6 +187,7 @@
         }
     }
     function dbPredictPosition($db, $MMSI, $latitude, $longitude, $SOG, $COG, $Heading, $longueur, $largeur, $draft, $time){
+        // Prédiction de la position d'un navire en utilisant un modèle déjà entraîné
         $cargo = dbGetCargo($db, $MMSI);
         $vesselType = dbGetVesselType($db, $MMSI);
 
@@ -199,6 +208,7 @@
         return $result;
     }
     function dbPredictClusters($latitude, $longitude, $SOG, $COG, $Heading){
+        // Prédiction des clusters pour un navire en utilisant un modèle KMeans
         $result = [];
         $command = "python3 ../python/main_fonc_1.py"
             . " --Predict True"
@@ -213,6 +223,7 @@
         
     }
     function dbGetLength($db){
+        //Récupération du nombre d'entrées dans la table historique
         try {
             $query = "SELECT COUNT(*) FROM historique";
             $stmt = $db->prepare($query);
@@ -224,6 +235,7 @@
         }
     }
     function dbGetLWD($db, $MMSI){
+        // Récupération de la longueur, largeur et draft d'un navire à partir de son MMSI
         try {
             $query = "SELECT longueur, largeur, draft FROM Bateau WHERE MMSI = :MMSI";
             $stmt = $db->prepare($query);
@@ -236,6 +248,7 @@
         }
     }
     function dbDeleteNavire($db, $MMSI) {
+        // Suppression d'un navire de la base de données
     try {
         $stmt = $db->prepare("DELETE FROM Bateau WHERE MMSI = :mmsi");
         $stmt->bindParam(':mmsi', $MMSI, PDO::PARAM_INT);

@@ -23,6 +23,8 @@ function clearPage() {
 
 
 function displayAjoutNavire() {
+  // Fonction pour afficher la page d'ajout de navire
+  resetBodyClasses(); // Réinitialiser les classes de body
   clearPage();
 
   $('body').addClass('page-ajout-navire');
@@ -114,7 +116,8 @@ function displayAjoutNavire() {
   $("#AjoutNavireForm").html(html);
 
   
-
+  // Événements pour les champs du formulaire
+  // Lorsque le champ MMSI est rempli, on récupère les infos du navire
   $('#MMSI').on('blur', function() {
   const mmsi = $(this).val().trim();
   
@@ -123,13 +126,15 @@ function displayAjoutNavire() {
     ajaxRequest('GET', `../php/request.php?action=getNavireInfo&mmsi=${mmsi}`, fillNavireFields);
   }
   });
+  // Lorsque le champ Longueur est rempli, on met le cog et le heading à 0
   $('#SOG').on('blur',function(){
     ajaxRequest('GET', `../php/request.php?action=putHSC0`, SogCogHeadingZero);
   })
 
   $('#AjoutNavireForm_envoi').submit((event) => {
+    //empeche le raffraichissement de la page
     event.preventDefault();
-
+    // Récupérer les données du formulaire
     const data = {
       MMSI: $("#MMSI").val(),
       date: $("#date").val(),
@@ -167,6 +172,7 @@ function displayAjoutNavire() {
 }
 
 function deleteNavireResponse(response){
+  // Fonction de réponse à la suppression du navire
   if(response == true){
     alert("Navire supprimé avec succès !");
     ajaxRequest('GET', '../php/request.php?action=home', displayAjoutNavire); // appel d’une vraie fonction page d’accueil
@@ -177,6 +183,7 @@ function deleteNavireResponse(response){
 }
 
 function fillNavireFields(response) {
+  // Fonction pour remplir les champs du formulaire avec les infos du navire
   console.log(response);
   if (response && response.longueur) {
     $('#Longueur').val(response.longueur);
@@ -189,6 +196,7 @@ function fillNavireFields(response) {
   }
 }
 function SogCogHeadingZero(){
+  // Fonction pour mettre SOG, COG et Heading à 0 si le SOG est à 0
   if($('#SOG').val() ==0){
     $('#SOG').val(0);
     $('#COG').val(0);
@@ -196,6 +204,7 @@ function SogCogHeadingZero(){
   }  
 }
 function addNavireResponse(response) {
+  // Fonction de réponse à l'ajout du navire
   console.log(response);
   if (response==true) {
     alert("Navire ajouté avec succès !");
